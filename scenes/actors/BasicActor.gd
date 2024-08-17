@@ -1,15 +1,19 @@
 extends CharacterBody2D
 
 const EPS = 1e-3
+
 const IDLE_SPEED = .3
 const IDLE_WANDER_DIST = 100.
+const DYING_SPEED = .1
+const BASE_HUNGER = .025
+const OFFSPRING_FOOD = .5
 
 var rng: RandomNumberGenerator
 
 var stats = preload("res://scripts/attributor.gd").new()
 
 var hp: float
-var hunger: float = .5
+var food: float
 var cSpeed: float
 
 enum States {
@@ -41,11 +45,16 @@ func start_moving(desiredPosition):
 		self.desiredPosition = desiredPosition
 		moving = true
 
+func die():
+	state = States.DYING
+	$DeathTimer.start()
+
 func _ready():
 	# seed rng
 	rng.seed = Time.get_unix_time_from_system()
 	
 	# change stats due to genes
+	$LifeTimer.wait_time = stats.lTime
 	
 	# set up sense shapes
 	var vConePoints: PackedVector2Array
@@ -58,12 +67,27 @@ func _ready():
 	
 	$SenseCircle/CollisionShape2D.shape.set_radius(stats.senseRadius)
 	
-	# init hp
+	# init hp and food
 	hp = stats.mhp
 	cSpeed = IDLE_SPEED * stats.speed
+	food = stats.maxFood / 2
 
 func _on_rnd_state_update_timeout() -> void:
-	
+	match state:
+		States.IDLE:
+			if rng.randf() < stats.curiosity:
+				state = States.INVESTIGATING
+				# investigate()
+			if food > stats.birthFood + OFFSPRING_FOOD and rng.randf() < stats.fertility:
+				state = States.REPRODUCING
+				$ReproductionTimer.start()
+		_:
+			pass
+
+func _process(delta):
+	food -= BASE_HUNGER * stats.hungerRate * delta
+	if food <= 0 or hp < stats.mhp:
+		die()
 
 func _physics_process(delta):
 	if moving:
@@ -88,3 +112,10 @@ func _on_idle_wander_timeout() -> void:
 		start_moving(position + Vector2.UP.rotated(rng.randf_range(0, 2*PI)) * IDLE_WANDER_DIST)
 	else:
 		$IdleWander.stop()
+
+func _on_reproduction_timer_timeout() -> void:
+	food -= stats.birthFood
+	state = States.IDLE
+
+func _on_life_timer_timeout() -> void:
+	die()
