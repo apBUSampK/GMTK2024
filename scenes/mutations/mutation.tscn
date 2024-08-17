@@ -1,27 +1,63 @@
-[gd_scene load_steps=2 format=3 uid="uid://isy45wwbgf0e"]
+[gd_scene load_steps=4 format=3 uid="uid://isy45wwbgf0e"]
 
 [ext_resource type="Script" path="res://scripts/mutation.gd" id="1_yn3yd"]
+
+[sub_resource type="Gradient" id="Gradient_ewun3"]
+offsets = PackedFloat32Array(0, 0.37013, 1)
+colors = PackedColorArray(0, 0, 0.690196, 1, 0.0566081, 0.37013, 0.804864, 1, 0.152941, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_iiryp"]
+gradient = SubResource("Gradient_ewun3")
+width = 1280
+height = 720
+fill_from = Vector2(0.224771, 0.857798)
+fill_to = Vector2(0.862385, 0.133028)
 
 [node name="Mutation" type="Node2D"]
 script = ExtResource("1_yn3yd")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="Scroll" type="ScrollContainer" parent="."]
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BG" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = -582.0
+offset_top = 134.0
+offset_right = 578.0
+offset_bottom = 331.0
+texture = SubResource("GradientTexture2D_iiryp")
+expand_mode = 1
+
+[node name="ScrollReference" type="ReferenceRect" parent="Control"]
+layout_mode = 2
+offset_left = -512.0
+offset_top = 140.0
+offset_right = 512.0
+offset_bottom = 268.0
+border_width = 2.6
+
+[node name="Scroll" type="ScrollContainer" parent="Control"]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -360.0
-offset_top = -64.0
-offset_right = 360.0
-offset_bottom = 64.0
+offset_left = -532.0
+offset_top = 120.0
+offset_right = 492.0
+offset_bottom = 248.0
 grow_horizontal = 2
 grow_vertical = 2
 follow_focus = true
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 0
 
-[node name="MutationContainer" type="HBoxContainer" parent="Scroll"]
+[node name="MutationContainer" type="HBoxContainer" parent="Control/Scroll"]
 layout_mode = 2
+alignment = 1
