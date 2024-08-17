@@ -24,7 +24,6 @@ func LoadMutForActor(actor: Node2D):
 		var mutInst: TextureButton = Mut.instantiate()
 		mutInst.SetGene(gene)
 		mutInst.SetTextShort()
-		mutInst.texture_normal = genNoiseTexture()
 		MutCont.add_child(mutInst)
 	MutCont.get_child(0).grab_focus()
 
