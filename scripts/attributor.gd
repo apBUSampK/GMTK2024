@@ -1,6 +1,8 @@
 extends RefCounted
 
 class Attributor:
+	# lifetime (in seconds)
+	var lTime: int = 300
 	# max hp
 	var mhp: float = 400.0
 	# damage
@@ -28,10 +30,10 @@ class Attributor:
 	# maximum temperature that the creature can survive, in Kelvins
 	var maxTemp: float = 333.0
 	# minimum food amount for the creature to survive
-	var minFood: float = 2.0
-	# maximum food amount that the creature can hold inside
 	var maxFood: float = 10.0
 	# amount of food that is needed for childbirth
 	var birthFood: float = 8.0
 	# food digestion pace
 	var hungerRate: float = 1.0
+	# fertility (chance for producing offspring if food is sufficient on state update)
+	var fertility: float = .7

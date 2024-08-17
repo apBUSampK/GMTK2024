@@ -43,6 +43,20 @@ autostart = true
 one_shot = true
 script = ExtResource("3_gd2aq")
 
+[node name="LifeTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="ReproductionTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
 [connection signal="timeout" from="RndStateUpdate" to="." method="_on_rnd_state_update_timeout"]
 [connection signal="timeout" from="IdleWander" to="." method="_on_idle_wander_timeout"]
 [connection signal="timeout" from="IdleWander" to="IdleWander" method="_on_timeout"]
+[connection signal="timeout" from="LifeTimer" to="." method="_on_life_timer_timeout"]
+[connection signal="timeout" from="ReproductionTimer" to="." method="_on_reproduction_timer_timeout"]
