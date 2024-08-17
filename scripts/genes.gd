@@ -4,9 +4,15 @@ enum Genes {
 	Hearty,
 	Nimble,
 	Insulated,
-	Assembler,
-	Linker,
-	Compiler,
+	Fertile,
 	Shocker,
 	#add more
+}
+
+const Descriptions = {
+	"Hearty": "JOJO", 
+	"Nimble": "DIO",
+	"Insulated": "BABA",
+	"Fertile": "IS",
+	"Shocker": "YOU",
 }

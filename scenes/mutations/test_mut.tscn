@@ -1,15 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://blreamgvokrnf"]
+[gd_scene load_steps=5 format=3 uid="uid://blreamgvokrnf"]
 
 [ext_resource type="Texture2D" uid="uid://ncwsosbv0hkn" path="res://scenes/mutations/mutationIcon.tres" id="1_5n4m1"]
 [ext_resource type="Script" path="res://scripts/test_mut.gd" id="2_x1kpa"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_pty25"]
-size = Vector2(128, 128)
+[sub_resource type="Gradient" id="Gradient_wnfhm"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_fey8c"]
+gradient = SubResource("Gradient_wnfhm")
 
 [node name="TestMut" type="TextureButton"]
 disabled = true
 texture_normal = ExtResource("1_5n4m1")
-texture_focused = SubResource("PlaceholderTexture2D_pty25")
+texture_focused = SubResource("GradientTexture1D_fey8c")
 script = ExtResource("2_x1kpa")
 metadata/_edit_use_anchors_ = true
 
@@ -18,3 +22,6 @@ layout_mode = 0
 offset_right = 128.0
 offset_bottom = 71.0
 text = "TEST"
+
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
+[connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
