@@ -1,10 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://bb18ichexwbxh"]
+[gd_scene load_steps=7 format=3 uid="uid://bb18ichexwbxh"]
 
 [ext_resource type="Script" path="res://scenes/actors/BasicActor.gd" id="1_rj44r"]
 [ext_resource type="Texture2D" uid="uid://bksgvob2vt0y4" path="res://icon.svg" id="2_os6uf"]
+[ext_resource type="Script" path="res://scripts/idle_wander.gd" id="3_gd2aq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ohi0u"]
 size = Vector2(128, 128)
+
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_dx440"]
+points = PackedVector2Array(0, 0)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rm320"]
 
 [node name="BasicActor" type="CharacterBody2D"]
 motion_mode = 1
@@ -16,3 +22,27 @@ texture = ExtResource("2_os6uf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ohi0u")
+
+[node name="VisionCone" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VisionCone"]
+shape = SubResource("ConvexPolygonShape2D_dx440")
+
+[node name="SenseCircle" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SenseCircle"]
+shape = SubResource("CircleShape2D_rm320")
+
+[node name="RndStateUpdate" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="detectedStateUpdate" type="Timer" parent="."]
+
+[node name="IdleWander" type="Timer" parent="."]
+one_shot = true
+script = ExtResource("3_gd2aq")
+
+[connection signal="timeout" from="RndStateUpdate" to="." method="_on_rnd_state_update_timeout"]
+[connection signal="timeout" from="IdleWander" to="." method="_on_idle_wander_timeout"]
+[connection signal="timeout" from="IdleWander" to="IdleWander" method="_on_timeout"]
