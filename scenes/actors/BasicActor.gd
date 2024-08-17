@@ -1,4 +1,4 @@
-extends CharacterBody2D
+class_name BasicActor extends CharacterBody2D
 
 const EPS = 1e-3
 
@@ -63,9 +63,9 @@ func _ready():
 	vConePoints.append(Vector2.UP.rotated(stats.fov/2) * stats.vRange)
 	var vCone: ConvexPolygonShape2D
 	vCone.points = vConePoints
-	$VisionCone/CollisionShape2D.shape = vCone
+	$Detection/VisionCone.shape = vCone
 	
-	$SenseCircle/CollisionShape2D.shape.set_radius(stats.senseRadius)
+	$Detection/SenseCircle.shape.set_radius(stats.senseRadius)
 	
 	# init hp and food
 	hp = stats.mhp
@@ -88,6 +88,7 @@ func _process(delta):
 	food -= BASE_HUNGER * stats.hungerRate * delta
 	if food <= 0 or hp < stats.mhp:
 		die()
+		
 
 func _physics_process(delta):
 	if moving:
@@ -119,3 +120,8 @@ func _on_reproduction_timer_timeout() -> void:
 
 func _on_life_timer_timeout() -> void:
 	die()
+
+
+func _on_detection_body_entered(body: Node2D) -> void:
+	if body is BasicActor:
+		pass

@@ -7,10 +7,10 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ohi0u"]
 size = Vector2(128, 128)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_rm320"]
+
 [sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_dx440"]
 points = PackedVector2Array(0, 0)
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_rm320"]
 
 [node name="BasicActor" type="CharacterBody2D"]
 motion_mode = 1
@@ -23,15 +23,13 @@ texture = ExtResource("2_os6uf")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ohi0u")
 
-[node name="VisionCone" type="Area2D" parent="."]
+[node name="Detection" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="VisionCone"]
-shape = SubResource("ConvexPolygonShape2D_dx440")
-
-[node name="SenseCircle" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SenseCircle"]
+[node name="SenseCircle" type="CollisionShape2D" parent="Detection"]
 shape = SubResource("CircleShape2D_rm320")
+
+[node name="VisionCone" type="CollisionShape2D" parent="Detection"]
+shape = SubResource("ConvexPolygonShape2D_dx440")
 
 [node name="RndStateUpdate" type="Timer" parent="."]
 wait_time = 5.0
@@ -55,6 +53,7 @@ one_shot = true
 wait_time = 1.5
 one_shot = true
 
+[connection signal="body_entered" from="Detection" to="." method="_on_detection_body_entered"]
 [connection signal="timeout" from="RndStateUpdate" to="." method="_on_rnd_state_update_timeout"]
 [connection signal="timeout" from="IdleWander" to="." method="_on_idle_wander_timeout"]
 [connection signal="timeout" from="IdleWander" to="IdleWander" method="_on_timeout"]
