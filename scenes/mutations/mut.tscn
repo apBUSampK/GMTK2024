@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=3 uid="uid://blreamgvokrnf"]
 
-[ext_resource type="Texture2D" uid="uid://dneao2340vopj" path="res://DNA.png" id="1_fh5cc"]
-[ext_resource type="Script" path="res://scripts/test_mut.gd" id="2_x1kpa"]
-[ext_resource type="StyleBox" uid="uid://dk112bgkao1gf" path="res://scenes/mutations/style.tres" id="4_4un5q"]
+[ext_resource type="Texture2D" uid="uid://dneao2340vopj" path="res://DNA.png" id="1_8oqu6"]
+[ext_resource type="Script" path="res://scripts/test_mut.gd" id="2_cqedj"]
+[ext_resource type="StyleBox" uid="uid://dk112bgkao1gf" path="res://scenes/mutations/style.tres" id="3_tlqy2"]
 
-[node name="TestMut" type="TextureButton"]
+[node name="Mutation" type="TextureButton"]
 texture_filter = 1
 texture_repeat = 1
 anchors_preset = 8
@@ -19,8 +19,8 @@ offset_bottom = -124.0
 grow_horizontal = 2
 grow_vertical = 2
 disabled = true
-texture_normal = ExtResource("1_fh5cc")
-script = ExtResource("2_x1kpa")
+texture_normal = ExtResource("1_8oqu6")
+script = ExtResource("2_cqedj")
 metadata/_edit_use_anchors_ = true
 
 [node name="Text" type="RichTextLabel" parent="."]
@@ -29,7 +29,7 @@ offset_right = 44.0
 offset_bottom = 28.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_styles/normal = ExtResource("4_4un5q")
+theme_override_styles/normal = ExtResource("3_tlqy2")
 text = "TEST"
 fit_content = true
 scroll_following = true

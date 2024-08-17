@@ -1,7 +1,7 @@
 extends Node2D
 
 var Genes = preload("res://scripts/genes.gd").new()
-const Mut = preload("res://scenes/mutations/test_mut.tscn")
+const Mut = preload("res://scenes/mutations/mut.tscn")
 const PossibleMut = preload("res://scenes/mutations/possible_mut.tscn")
 @onready var MutCont = $Control/Scroll/MutationContainer
 
@@ -12,9 +12,6 @@ func LoadGenesForActor(actor: Node2D):
 		mutInst.SetGene(gene)
 		mutInst.SetTextShort()
 		MutCont.add_child(mutInst)
-	NewMutation()
-	NewMutation()
-	NewMutation()
 
 func NewMutation():
 	var possible: TabContainer = PossibleMut.instantiate()
@@ -28,8 +25,9 @@ func NewMutation():
 	possible.add_child(mutInst)
 	
 	MutCont.add_child(possible)
-	MutCont.get_child(0).grab_focus()
+	MutCont.get_child(0).get_child(0).grab_focus()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	NewMutation()
 	LoadGenesForActor(null)
