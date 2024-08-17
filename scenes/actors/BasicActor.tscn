@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://bb18ichexwbxh"]
+
+[ext_resource type="Script" path="res://scenes/actors/BasicActor.gd" id="1_rj44r"]
+[ext_resource type="Texture2D" uid="uid://bksgvob2vt0y4" path="res://icon.svg" id="2_os6uf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ohi0u"]
+size = Vector2(128, 128)
+
+[node name="BasicActor" type="CharacterBody2D"]
+motion_mode = 1
+slide_on_ceiling = false
+script = ExtResource("1_rj44r")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_os6uf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ohi0u")
