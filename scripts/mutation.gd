@@ -1,32 +1,35 @@
 extends Node2D
 
-const Genes = preload("res://scripts/genes.gd")
+var Genes = preload("res://scripts/genes.gd").new()
 const Mut = preload("res://scenes/mutations/test_mut.tscn")
+const PossibleMut = preload("res://scenes/mutations/possible_mut.tscn")
 @onready var MutCont = $Control/Scroll/MutationContainer
 
-func genNoiseTexture() -> NoiseTexture2D:
-	var noise = FastNoiseLite.new()
-	noise.frequency = 0.002 * randf_range(0.5, 2.0)
-	noise.fractal_type = FastNoiseLite.FRACTAL_RIDGED
-	noise.fractal_gain = 1.0
-	noise.offset.x = randf_range(0, 1000)
-	noise.offset.y = randf_range(0, 1000)
-	
-	var tex = NoiseTexture2D.new()
-	tex.noise = noise
-	tex.width = 128
-	tex.height = 128
-	return tex
-
 # TODO: change genes enum to actor's genes
-func LoadMutForActor(actor: Node2D):
+func LoadGenesForActor(actor: Node2D):
 	for gene in Genes.Genes:
 		var mutInst: TextureButton = Mut.instantiate()
 		mutInst.SetGene(gene)
 		mutInst.SetTextShort()
 		MutCont.add_child(mutInst)
+	NewMutation()
+	NewMutation()
+	NewMutation()
+
+func NewMutation():
+	var possible: TabContainer = PossibleMut.instantiate()
+	var mutInst: TextureButton = Mut.instantiate()
+	var geneName = Genes.ToStr(Genes.Genes.Agile)
+	mutInst.SetGene(geneName)
+	possible.add_child(mutInst)
+	
+	mutInst = Mut.instantiate()
+	mutInst.SetGene(Genes.ToStr(Genes.Genes.Calm))
+	possible.add_child(mutInst)
+	
+	MutCont.add_child(possible)
 	MutCont.get_child(0).grab_focus()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	LoadMutForActor(null)
+	LoadGenesForActor(null)

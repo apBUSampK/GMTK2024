@@ -2,10 +2,11 @@
 
 [ext_resource type="Texture2D" uid="uid://dneao2340vopj" path="res://DNA.png" id="1_fh5cc"]
 [ext_resource type="Script" path="res://scripts/test_mut.gd" id="2_x1kpa"]
-
-[sub_resource type="Theme" id="Theme_bgejt"]
+[ext_resource type="StyleBox" uid="uid://dk112bgkao1gf" path="res://scenes/mutations/style.tres" id="4_4un5q"]
 
 [node name="TestMut" type="TextureButton"]
+texture_filter = 1
+texture_repeat = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -13,23 +14,22 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -576.0
 offset_top = -324.0
-offset_right = -445.0
-offset_bottom = -246.0
+offset_right = -376.0
+offset_bottom = -124.0
 grow_horizontal = 2
 grow_vertical = 2
 disabled = true
 texture_normal = ExtResource("1_fh5cc")
-stretch_mode = 0
 script = ExtResource("2_x1kpa")
 metadata/_edit_use_anchors_ = true
 
 [node name="Text" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_right = 128.0
-offset_bottom = 71.0
-theme = SubResource("Theme_bgejt")
+offset_right = 44.0
+offset_bottom = 28.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = ExtResource("4_4un5q")
 text = "TEST"
 fit_content = true
 scroll_following = true
