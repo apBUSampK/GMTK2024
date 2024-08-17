@@ -21,7 +21,6 @@ func genNoiseTexture() -> NoiseTexture2D:
 # TODO: change genes enum to actor's genes
 func Load_mut_for_actor(actor: Node2D):
 	for gene in Genes.Genes:
-		print(gene)
 		var mutInst: TextureButton = Mut.instantiate()
 		mutInst.Set_text(gene)
 		mutInst.texture_normal = genNoiseTexture()
@@ -31,7 +30,6 @@ func Load_mut_for_actor(actor: Node2D):
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Load_mut_for_actor(null)
-	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

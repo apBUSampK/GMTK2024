@@ -5,6 +5,8 @@ enum Genes {
 	Nimble,
 	Insulated,
 	Assembler,
+	Linker,
+	Compiler,
 	Shocker,
 	#add more
 }
