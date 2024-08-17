@@ -1,6 +1,6 @@
 extends RefCounted
 
-enum {
+enum Genes {
 	Hearty,
 	Nimble,
 	Insulated,
