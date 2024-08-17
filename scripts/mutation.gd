@@ -1,9 +1,10 @@
 extends Node2D
 
-var Genes = preload("res://scripts/genes.gd").new()
 const Mut = preload("res://scenes/mutations/mut.tscn")
 const PossibleMut = preload("res://scenes/mutations/possible_mut.tscn")
+
 @onready var MutCont = $Control/Scroll/MutationContainer
+@onready var Genes = preload("res://scripts/genes.gd").new()
 
 # TODO: change genes enum to actor's genes
 func LoadGenesForActor(actor: Node2D):

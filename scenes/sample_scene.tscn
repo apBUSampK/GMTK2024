@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c7c0stui2ulny"]
+
+[ext_resource type="PackedScene" uid="uid://bb18ichexwbxh" path="res://scenes/actors/BasicActor.tscn" id="1_he3de"]
+
+[node name="SampleScene" type="Node2D"]
+
+[node name="BasicActor" parent="." instance=ExtResource("1_he3de")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
