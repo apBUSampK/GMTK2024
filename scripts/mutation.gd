@@ -34,6 +34,11 @@ func _ready():
 	NewMutation()
 	LoadGenesForActor(null)
 
+func _process(delta_time: float):
+	pass
+	if Input.is_action_just_pressed('ui_accept'):
+		pass
+
 func mutation_change_param(mutation_name: String, actor_attributes: attributor.Attributor):
 	for mutation_description in Genes.Descriptions[mutation_name]: 
 		var words = mutation_description.split(" ", false)
