@@ -1,5 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://jgi3xmy3tqdn"]
 
+[ext_resource type="PackedScene" uid="uid://bb18ichexwbxh" path="res://scenes/actors/BasicActor.tscn" id="1_he3de"]
 [ext_resource type="Script" path="res://scripts/sample_scene.gd" id="1_mvqm1"]
 [ext_resource type="PackedScene" uid="uid://isy45wwbgf0e" path="res://scenes/mutations/mutation.tscn" id="2_vmace"]
 
