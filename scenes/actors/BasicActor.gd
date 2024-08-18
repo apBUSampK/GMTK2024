@@ -127,6 +127,7 @@ func _ready():
 	# Connect Signals
 	$IdleWander.timeout.connect(_on_idle_wander_timeout)
 	$Detection.body_entered.connect(_on_detection_body_entered)
+	input_event.connect(_on_input_event)
 
 func update(delta):	
 	# Main state machine loop
