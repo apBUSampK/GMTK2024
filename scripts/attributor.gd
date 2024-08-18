@@ -44,10 +44,10 @@ class Attributor:
 	var viewRange = Attribute.new("view range", 30.0)
 	
 	# field of view in radians
-	var filedOfView = Attribute.new("vield of view", PI / 2)
+	var fieldOfView = Attribute.new("field of view", PI / 2)
 	
 	# radius in which the creature can sense other creatures even outside fov
-	var senceRadius = Attribute.new("sence radius", 1.0)
+	var senseRadius = Attribute.new("sense radius", 1.0)
 	
 	# minimum temperature that the creature can survive, in Kelvins
 	var minTemp = Attribute.new("minimal temerature", 273.0)
@@ -71,8 +71,9 @@ class Attributor:
 	var _attribute_name_to_property: Dictionary
 	
 	func _init():
-		for property in self.get_property_list():
-			_attribute_name_to_property[(self.get(property.name)).name] = property.name
+		for property in get_property_list():
+			pass
+			#_attribute_name_to_property[(self.get(property['name'])).name] = property.name
 	
 	func get_property_by_attribute_name(attribute_name: String):
 		var property_name = _attribute_name_to_property[attribute_name]

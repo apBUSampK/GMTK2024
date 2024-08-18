@@ -3,6 +3,7 @@ extends Node2D
 const Mut = preload("res://scenes/mutations/mut.tscn")
 const PossibleMut = preload("res://scenes/mutations/possible_mut.tscn")
 const attributor = preload("res://scripts/attributor.gd")
+
 @onready var MutCont = $Control/Scroll/MutationContainer
 @onready var Genes = preload("res://scripts/genes.gd").new()
 

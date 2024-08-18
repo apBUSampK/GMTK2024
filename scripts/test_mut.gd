@@ -1,8 +1,6 @@
 extends TextureButton
 
 const Genes = preload("res://scripts/genes.gd")
-#const TextStyle = preload("res://scenes/mutations/style.tres")
-#const TextStyleDarker = preload("res://scenes/mutations/style_darker.tres")
 
 var thisGene
 
@@ -25,8 +23,6 @@ func GetText() -> String:
 
 func _on_focus_entered():
 	call_deferred("SetTextFull")
-	#$Text.add_theme_stylebox_override("normal", TextStyle)
 
 func _on_focus_exited():
 	call_deferred("SetTextShort")
-	#$Text.add_theme_stylebox_override("normal", TextStyleDarker)
