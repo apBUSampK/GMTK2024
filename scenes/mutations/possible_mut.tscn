@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://ggqepi25bcdc"]
+
+[ext_resource type="Script" path="res://scripts/possible_mut.gd" id="1_wo7pi"]
+
+[node name="PossibleMut" type="TabContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_right = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+tab_alignment = 1
+clip_tabs = false
+all_tabs_in_front = true
+tab_focus_mode = 0
+script = ExtResource("1_wo7pi")
+
+[connection signal="tab_selected" from="." to="." method="_on_tab_selected"]

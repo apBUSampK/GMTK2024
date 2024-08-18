@@ -5,13 +5,21 @@ enum Genes {
 	Agile,
 	Insulated,
 	Fertile,
-	Shocker,
+	Shocker
 }
 
+const MUCH = "Much "
+const SLIGHT = "Slightly "
+const LESS = "less "
+const MORE = "more "
+
 const Descriptions = {
-	"Calm": ["Much less aggressive\n", "Slightly more HP\n", "Slight less guts\n"],
-	"Agile": ["Much more speed\n", "Much less guts\n"],
-	"Insulated": ["Much more HP\n", "Slightly less speed\n", "Slightly less fertility\n"],
-	"Fertile": ["Much more fetility\n", "Much less guts\n", ],
-	"Shocker": ["Slight less HP\n"],
+	"Calm":  [MUCH + LESS + "aggressive\n", SLIGHT + MORE + "HP\n", SLIGHT + LESS + "guts\n"],
+	"Agile": [MUCH + MORE + "speed\n", MUCH + LESS + "guts\n"],
+	"Insulated": [MUCH + MORE + "HP\n", SLIGHT + LESS + "speed\n", SLIGHT + LESS + "fertility\n"],
+	"Fertile": [MUCH + MORE + "fertility\n", MUCH + LESS + "guts\n", ],
+	"Shocker": [SLIGHT + LESS + "HP\n", SLIGHT + MORE + "speed\n"],
 }
+
+func ToStr(gene):
+	return Genes.keys()[gene]

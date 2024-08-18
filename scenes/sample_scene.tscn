@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://jgi3xmy3tqdn"]
+
+[ext_resource type="PackedScene" uid="uid://bb18ichexwbxh" path="res://scenes/actors/BasicActor.tscn" id="1_he3de"]
+[ext_resource type="Script" path="res://scripts/sample_scene.gd" id="1_mvqm1"]
+
+[node name="SampleScene" type="Node2D"]
+script = ExtResource("1_mvqm1")
+
+[node name="BasicActor" parent="." instance=ExtResource("1_he3de")]
+position = Vector2(-303, 301)
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0)
+width = 2.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.25, 0.25)
