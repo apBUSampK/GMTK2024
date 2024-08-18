@@ -32,21 +32,11 @@ shape = SubResource("CircleShape2D_rm320")
 [node name="VisionCone" type="CollisionShape2D" parent="Detection"]
 shape = SubResource("ConvexPolygonShape2D_dx440")
 
-[node name="DebugLine" type="Line2D" parent="Detection"]
-points = PackedVector2Array(0, 0)
-width = 4.0
-default_color = Color(0, 1, 1, 1)
-
-[node name="RndStateUpdate" type="Timer" parent="."]
-wait_time = 5.0
-autostart = true
-
 [node name="detectedStateUpdate" type="Timer" parent="."]
 
 [node name="IdleWander" type="Timer" parent="."]
 one_shot = true
 script = ExtResource("3_gd2aq")
-tmin = 2.0
 tmax = 3.0
 
 [node name="DeathTimer" type="Timer" parent="."]

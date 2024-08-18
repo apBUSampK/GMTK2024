@@ -35,7 +35,7 @@ class Attributor:
 	var movementSpeed = Attribute.new("speed", 600.0)
 	
 	# turning speed in radians
-	var turnSpeed = Attribute.new("turning speed", 0.1)
+	var turnSpeed = Attribute.new("turning speed", 1)
 	
 	# how brave the creature is
 	var guts = Attribute.new("guts", 0.0)

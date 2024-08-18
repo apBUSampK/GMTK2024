@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dta61ef05xknk"]
+[gd_scene load_steps=7 format=3 uid="uid://bcw4sqgiy1r25"]
 
 [ext_resource type="Script" path="res://scenes/actors/HostileActor.gd" id="1_gcm5v"]
 [ext_resource type="Texture2D" uid="uid://bksgvob2vt0y4" path="res://icon.svg" id="2_hwpm4"]
@@ -31,10 +31,6 @@ shape = SubResource("CircleShape2D_rm320")
 [node name="VisionCone" type="CollisionShape2D" parent="Detection"]
 shape = SubResource("ConvexPolygonShape2D_dx440")
 
-[node name="RndStateUpdate" type="Timer" parent="."]
-wait_time = 5.0
-autostart = true
-
 [node name="detectedStateUpdate" type="Timer" parent="."]
 
 [node name="IdleWander" type="Timer" parent="."]
@@ -45,7 +41,4 @@ script = ExtResource("3_dtdih")
 wait_time = 1.5
 one_shot = true
 
-[connection signal="body_entered" from="Detection" to="." method="_on_detection_body_entered"]
-[connection signal="timeout" from="RndStateUpdate" to="." method="_on_rnd_state_update_timeout"]
-[connection signal="timeout" from="IdleWander" to="." method="_on_idle_wander_timeout"]
 [connection signal="timeout" from="IdleWander" to="IdleWander" method="_on_timeout"]

@@ -16,7 +16,7 @@ class StateMachine:
 	
 	var state: States
 	var state_funcs: Array[Callable] = []
-	var set_funcs: Array[Callable] = []
+	var oneshot_funcs: Array[Callable] = []
 	
 	func _init(init_state: States):
 		state = init_state
@@ -25,10 +25,10 @@ class StateMachine:
 		#print("Changing from ", States.keys()[state], " to ", States.keys()[st])
 		state = st
 	
-	func SetFunctions(funcs: Dictionary, set_fucns: Dictionary):
+	func SetFunctions(funcs: Dictionary, ofuncs: Dictionary):
 		for state_val in States:
 			state_funcs.append(funcs[state_val])
-			set_funcs.append(set_funcs[state_val])
+			oneshot_funcs.append(ofuncs[state_val])
 	
 	func process():
 		state_funcs[state].call()
