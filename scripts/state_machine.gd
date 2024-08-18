@@ -21,6 +21,7 @@ class StateMachine:
 		state = init_state
 	
 	func SetState(st: States):
+		#print("Changing from ", States.keys()[state], " to ", States.keys()[st])
 		state = st
 	
 	func SetFunctions(funcs: Dictionary):

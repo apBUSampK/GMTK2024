@@ -1,15 +1,16 @@
 class_name BasicActor extends CharacterBody2D
 
-const EPS = 1.0
+const EPS = 1e-2
 
 const IDLE_SPEED = .3
-const IDLE_WANDER_DIST = 100.
+const IDLE_WANDER_DIST = 250.
 const DYING_SPEED = .1
 const BASE_HUNGER = .025
 const OFFSPRING_FOOD = .5
 
 const attributor = preload("res://scripts/attributor.gd")
 const sm = preload("res://scripts/state_machine.gd")
+const child = preload("res://scenes/actors/BasicActor.tscn")
 
 var attrs = attributor.Attributor.new()
 var smInst: sm.StateMachine
@@ -17,12 +18,10 @@ var smInst: sm.StateMachine
 var hp: float
 var food: float
 var cSpeed: float
-
-var rotating = false
-var moving = false
-
-var desiredRotation = 0.
 var desiredPosition = Vector2.ZERO
+# The only object our creature can keep in memory.
+# This will be the enemy we're avoiding, or the food we want to grab
+var targetObj: CollisionObject2D
 
 func setupStateMachine():
 	smInst = sm.StateMachine.new(sm.States.IDLE)
@@ -56,6 +55,8 @@ func setupSenseShapes():
 
 func idle():
 	# print("Idle")
+	if $IdleWander.is_stopped():
+		$IdleWander.Init()
 	return
 
 func attack():
@@ -71,6 +72,7 @@ func flee():
 func reproduce():
 	print("Repr")
 	if food > attrs.birthFood.value + OFFSPRING_FOOD:
+		print("Start birth")
 		food -= attrs.birthFood.value
 		$ReproductionTimer.start()
 	smInst.SetState(sm.States.IDLE)
@@ -81,7 +83,17 @@ func scout():
 	return
 
 func grab():
-	print("Grab")
+	#print("Grab")
+	if not targetObj:
+		smInst.SetState(sm.States.IDLE)
+		return
+	for index in get_slide_collision_count():
+		var collisionObj := get_slide_collision(index).get_collider()
+		if collisionObj and collisionObj.is_in_group("Food"):
+			food += targetObj.Consume()
+			targetObj = null
+			smInst.SetState(sm.States.IDLE)
+			return
 	return
 
 func die():
@@ -135,12 +147,13 @@ func rotate_to_face(pos) -> bool:
 # Move towards delta_pos
 func move(delta_pos):
 	var dir = delta_pos.normalized()
-	move_and_collide(dir * cSpeed)
+	velocity = dir * cSpeed
+	move_and_slide()
 
 # Rotate to face the position, then move towards it
 func _physics_process(delta):
 	var delta_pos = desiredPosition - position
-	if delta_pos.length() > EPS:
+	if delta_pos.length() > EPS * attrs.movementSpeed.value:
 		if not rotate_to_face(desiredPosition):
 			move(delta_pos)
 
@@ -168,6 +181,10 @@ func _on_idle_wander_timeout() -> void:
 
 func _on_reproduction_timer_timeout() -> void:
 	# Reproduction state ended, here we will spawn a child
+	print("Spawn child!")
+	var childInst = child.instantiate()
+	childInst.position = position
+	get_parent().add_child(childInst)
 	return
 
 func _on_life_timer_timeout() -> void:
@@ -178,4 +195,8 @@ func _on_life_timer_timeout() -> void:
 func _on_detection_body_entered(body: Node2D) -> void:
 	if body == self:
 		return
-	print(body)
+	#print(body)
+	if body.is_in_group("Food") and not targetObj:
+		smInst.SetState(sm.States.GRABBING)
+		desiredPosition = body.position
+		targetObj = body
