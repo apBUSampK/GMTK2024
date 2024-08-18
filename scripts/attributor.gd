@@ -70,16 +70,24 @@ class Attributor:
 	# dictonary to keep relationsheep between class propery's name and attribute name 
 	var _attribute_name_to_property: Dictionary
 	
-	func _init():
+	# [DKay]: Unfortunately, this function can't be call from _init method 
+	#					so, we will call it from get/set property by attr function but with caching
+	func fill_attr_to_property_dict():
+		if not _attribute_name_to_property.is_empty():
+			return
+
 		for property in get_property_list():
-			pass
-			#_attribute_name_to_property[(self.get(property['name'])).name] = property.name
-	
+			_attribute_name_to_property[(self.get(property['name'])).name] = property.name_
+
 	func get_property_by_attribute_name(attribute_name: String):
+		fill_attr_to_property_dict()
+
 		var property_name = _attribute_name_to_property[attribute_name]
 		return self.get(property_name)
-	
+
 	func set_property_by_attribute_name(attribute_name: String, property: Attribute):
+		fill_attr_to_property_dict()
+
 		var property_name = _attribute_name_to_property[attribute_name]
 		self.set(property_name, property)
 	
