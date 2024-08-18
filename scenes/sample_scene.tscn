@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://jgi3xmy3tqdn"]
 
-[ext_resource type="PackedScene" uid="uid://bb18ichexwbxh" path="res://scenes/actors/BasicActor.tscn" id="1_he3de"]
 [ext_resource type="Script" path="res://scripts/sample_scene.gd" id="1_mvqm1"]
 [ext_resource type="PackedScene" uid="uid://isy45wwbgf0e" path="res://scenes/mutations/mutation.tscn" id="2_vmace"]
+[ext_resource type="PackedScene" uid="uid://b8gs1agqdboak" path="res://scenes/actors/PlayerActor.tscn" id="3_lavn3"]
 
 [node name="SampleScene" type="Node2D"]
 process_mode = 3
@@ -14,9 +14,7 @@ script = ExtResource("1_mvqm1")
 process_mode = 2
 visible = false
 
-[node name="BasicActor" parent="." node_paths=PackedStringArray("mutScreen") instance=ExtResource("1_he3de")]
-position = Vector2(-303, 301)
-mutScreen = NodePath("../Camera2D/Mutation")
+[node name="PlayerActor" parent="." instance=ExtResource("3_lavn3")]
 
 [node name="Line2D" type="Line2D" parent="."]
 points = PackedVector2Array(0, 0)
