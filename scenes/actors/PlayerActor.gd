@@ -39,7 +39,6 @@ func _ready() -> void:
 	# connect signals
 	$RndStateUpdate.timeout.connect(_on_rnd_state_update_timeout)
 	$ReproductionTimer.timeout.connect(_on_reproduction_timer_timeout)
-	$Detection.body_entered.connect(_on_detection_body_entered)
 
 func grab() -> Food:
 	#print("Grab")
