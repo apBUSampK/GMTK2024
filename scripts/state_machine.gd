@@ -12,7 +12,7 @@ enum States {
 
 class StateMachine:
 	func dummy():
-		print(state)
+		print("DUMMY, state =", state)
 	
 	var state: States
 	var state_funcs: Array[Callable] = []

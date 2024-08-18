@@ -32,16 +32,16 @@ class Attributor:
 	var curiosity = Attribute.new("curiosity", 0.1)
 	
 	# movement speed
-	var movementSpeed = Attribute.new("speed", 1.0)
+	var movementSpeed = Attribute.new("speed", 6.0)
 	
 	# turning speed in radians
-	var turnSpeed = Attribute.new("turning speed", 2.0)
+	var turnSpeed = Attribute.new("turning speed", 0.1)
 	
 	# how brave the creature is
 	var guts = Attribute.new("guts", 0.0)
 	
 	# range of view
-	var viewRange = Attribute.new("view range", 30.0)
+	var viewRange = Attribute.new("view range", 300.0)
 	
 	# field of view in radians
 	var fieldOfView = Attribute.new("field of view", PI / 2)
