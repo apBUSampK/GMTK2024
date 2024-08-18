@@ -44,13 +44,13 @@ func _ready():
 	randomize()
 	
 	# change stats due to genes
-	$LifeTimer.wait_time = stats.lTime
+	$LifeTimer.wait_time = stats.liveTime
 	
 	# set up sense shapes
 	var vConePoints: PackedVector2Array
 	vConePoints.append(Vector2.ZERO)
-	vConePoints.append(Vector2.UP.rotated(-stats.fov/2) * stats.vRange)
-	vConePoints.append(Vector2.UP.rotated(stats.fov/2) * stats.vRange)
+	vConePoints.append(Vector2.UP.rotated(-stats.FieldOfView / 2) * stats.viewRange)
+	vConePoints.append(Vector2.UP.rotated(stats.FieldOfView / 2) * stats.viewRange)
 	var vCone = ConvexPolygonShape2D.new()
 	vCone.points = vConePoints
 	$Detection/VisionCone.shape = vCone
@@ -58,14 +58,14 @@ func _ready():
 	$Detection/SenseCircle.shape.set_radius(stats.senseRadius)
 	
 	# init hp and food
-	hp = stats.mhp
+	hp = stats.maxHp
 	cSpeed = IDLE_SPEED * stats.speed
 	food = stats.maxFood / 2
 	$LifeTimer.start()
 
 func _process(delta):
 	food -= BASE_HUNGER * stats.hungerRate * delta
-	if food <= 0 or hp < stats.mhp:
+	if food <= 0 or hp < stats.maxHp:
 		die()
 
 func _physics_process(delta):
@@ -76,7 +76,7 @@ func _physics_process(delta):
 			velocity = heading.normalized() * cSpeed
 	if rotating:
 		if rotation != desiredRotation:
-			rotate(stats.phiSpeed * delta)
+			rotate(stats.turnSpeed * delta)
 		else:
 			rotating = false
 	if (desiredPosition - position).length() < EPS:
