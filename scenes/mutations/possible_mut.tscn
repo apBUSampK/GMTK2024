@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://ggqepi25bcdc"]
+[gd_scene load_steps=3 format=3 uid="uid://ggqepi25bcdc"]
 
 [ext_resource type="Script" path="res://scripts/possible_mut.gd" id="1_wo7pi"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ipa7f"]
+bg_color = Color(0.217743, 0.410311, 0.711606, 1)
 
 [node name="PossibleMut" type="TabContainer"]
 anchors_preset = 8
@@ -12,6 +15,7 @@ offset_left = -4.0
 offset_right = 4.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/tab_selected = SubResource("StyleBoxFlat_ipa7f")
 tab_alignment = 1
 clip_tabs = false
 all_tabs_in_front = true

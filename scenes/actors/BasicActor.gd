@@ -9,6 +9,8 @@ const DYING_SPEED = .1
 const attributor = preload("res://scripts/attributor.gd")
 const sm = preload("res://scripts/state_machine.gd")
 const child = preload("res://scenes/actors/BasicActor.tscn")
+const genes = preload("res://scripts/genes.gd")
+@export var mutScreen: CanvasLayer
 
 var attrs: attributor.Attributor
 var smInst: sm.StateMachine
@@ -19,6 +21,8 @@ var desiredPosition = Vector2.ZERO
 # The only object our creature can keep in memory.
 # This will be the enemy we're avoiding, or the food we want to grab
 var targetObj: CollisionObject2D
+
+var Genes: Array[genes.Genes] = [genes.Genes.Calm, genes.Genes.Agile]
 
 func setupStateMachine():
 	smInst = sm.StateMachine.new(sm.States.IDLE)
@@ -171,3 +175,8 @@ func _on_detection_body_entered(body: Node2D) -> void:
 		desiredPosition = body.position
 		targetObj = body
 		return
+
+func _on_input_event(viewport, event, shape_idx):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
+			mutScreen.LoadGenesForActor(self)

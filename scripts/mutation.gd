@@ -1,19 +1,24 @@
-extends Node2D
+extends CanvasLayer
 
 const Mut = preload("res://scenes/mutations/mut.tscn")
 const PossibleMut = preload("res://scenes/mutations/possible_mut.tscn")
 const attributor = preload("res://scripts/attributor.gd")
 
-@onready var MutCont = $Control/Scroll/MutationContainer
+@export var MutCont: Container
 @onready var Genes = preload("res://scripts/genes.gd").new()
 
 # TODO: change genes enum to actor's genes
 func LoadGenesForActor(actor: Node2D):
-	for gene in Genes.Genes:
+	show()
+	get_tree().paused = true
+	
+	NewMutation()
+	for gene in actor.Genes:
 		var mutInst: TextureButton = Mut.instantiate()
-		mutInst.SetGene(gene)
+		mutInst.SetGene(Genes.ToStr(gene))
 		mutInst.SetTextShort()
 		MutCont.add_child(mutInst)
+	MutCont.get_child(0).grab_focus()
 
 func NewMutation():
 	var possible: TabContainer = PossibleMut.instantiate()
@@ -27,12 +32,12 @@ func NewMutation():
 	possible.add_child(mutInst)
 	
 	MutCont.add_child(possible)
-	MutCont.get_child(0).get_child(0).grab_focus()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	NewMutation()
-	LoadGenesForActor(null)
+	#NewMutation()
+	#LoadGenesForActor(null)
+	return
 
 func _process(delta_time: float):
 	pass
