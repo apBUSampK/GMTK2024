@@ -42,5 +42,3 @@ tmax = 3.0
 [node name="DeathTimer" type="Timer" parent="."]
 wait_time = 1.5
 one_shot = true
-
-[connection signal="timeout" from="IdleWander" to="IdleWander" method="_on_timeout"]

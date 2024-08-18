@@ -61,8 +61,7 @@ func dummy():
 
 func oneshot_idle():
 	cSpeed = IDLE_SPEED * attrs.movementSpeed.value
-	if $IdleWander.is_stopped():
-		$IdleWander.Init()
+	$IdleWander.Init()
 	return
 
 func set_max_speed():
@@ -135,10 +134,10 @@ func _process(delta):
 
 func rotate_to_face(delta, pos) -> bool:
 	var delta_angle = position.angle_to_point(pos) - rotation
-	if delta_angle > attrs.turnSpeed.value:
+	if delta_angle > EPS * attrs.turnSpeed.value:
 		rotate(attrs.turnSpeed.value * delta)
 		return true
-	if delta_angle < -attrs.turnSpeed.value:
+	if delta_angle < -EPS * attrs.turnSpeed.value:
 		rotate(-attrs.turnSpeed.value * delta)
 		return true
 	return false
