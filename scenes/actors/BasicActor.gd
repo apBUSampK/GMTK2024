@@ -27,7 +27,7 @@ var Genes: Array[genes.Genes] = [genes.Genes.Calm, genes.Genes.Agile]
 func setupStateMachine():
 	smInst = sm.StateMachine.new(sm.States.IDLE)
 	var state_funcs = {
-		"IDLE": dummy,
+		"IDLE": idle,
 		"ATTACKING": attack,
 		"FLEEING": flee,
 		"REPRODUCING": dummy,
@@ -63,9 +63,15 @@ func setupSenseShapes():
 func dummy():
 	pass
 
+func idle():
+	# passive food destruction
+	for index in get_slide_collision_count():
+		var collisionObj := get_slide_collision(index).get_collider()
+		if collisionObj and collisionObj is Food:
+			collisionObj.Consume()
+
 func oneshot_idle():
 	cSpeed = IDLE_SPEED * attrs.movementSpeed.value
-	$IdleWander.Init()
 	return
 
 func set_max_speed():
@@ -74,28 +80,44 @@ func set_max_speed():
 
 func attack():
 	print("Attack")
+	# passive food destruction
+	for index in get_slide_collision_count():
+		var collisionObj := get_slide_collision(index).get_collider()
+		if collisionObj and collisionObj is Food:
+			collisionObj.Consume()
 	return
 
-func grab() -> Food:
+func grab():
 	#print("Grab")
 	if not targetObj:
 		smInst.SetState(sm.States.IDLE)
-		return null
+		return
 	for index in get_slide_collision_count():
 		var collisionObj := get_slide_collision(index).get_collider()
 		if collisionObj and collisionObj is Food:
 			targetObj = null
 			smInst.SetState(sm.States.IDLE)
+			# active food destruction
+			collisionObj.Consume()
 			return collisionObj
-	return null
+	return
 
 func flee():
 	print("Flee")
+	# passive food destruction
+	for index in get_slide_collision_count():
+		var collisionObj := get_slide_collision(index).get_collider()
+		if collisionObj and collisionObj is Food:
+			collisionObj.Consume()
 	return
 
 func scout():
 	print("Scout")
-	smInst.SetState(sm.States.IDLE)
+	# passive food destruction
+	for index in get_slide_collision_count():
+		var collisionObj := get_slide_collision(index).get_collider()
+		if collisionObj and collisionObj is Food:
+			collisionObj.Consume()
 	return
 
 func oneshot_die():
@@ -165,7 +187,7 @@ func _on_idle_wander_timeout() -> void:
 	if smInst.state == sm.States.IDLE:
 		desiredPosition = position + Vector2.UP.rotated(randf_range(0, 2*PI)) * IDLE_WANDER_DIST
 		$"../Line2D".add_point(desiredPosition)
-		$IdleWander.Init()
+	$IdleWander.Init()
 	return
 
 func _on_detection_body_entered(body: Node2D) -> void:
