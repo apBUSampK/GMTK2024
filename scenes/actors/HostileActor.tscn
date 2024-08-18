@@ -1,8 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bb18ichexwbxh"]
+[gd_scene load_steps=7 format=3 uid="uid://dta61ef05xknk"]
 
-[ext_resource type="Script" path="res://scenes/actors/BasicActor.gd" id="1_rj44r"]
-[ext_resource type="Texture2D" uid="uid://bksgvob2vt0y4" path="res://icon.svg" id="2_os6uf"]
-[ext_resource type="Script" path="res://scripts/idle_wander.gd" id="3_gd2aq"]
+[ext_resource type="Script" path="res://scenes/actors/HostileActor.gd" id="1_gcm5v"]
+[ext_resource type="Texture2D" uid="uid://bksgvob2vt0y4" path="res://icon.svg" id="2_hwpm4"]
+[ext_resource type="Script" path="res://scripts/idle_wander.gd" id="3_dtdih"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ohi0u"]
 size = Vector2(128, 128)
@@ -12,13 +12,13 @@ size = Vector2(128, 128)
 [sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_dx440"]
 points = PackedVector2Array(0, 0)
 
-[node name="BasicActor" type="CharacterBody2D"]
+[node name="HostileActor" type="CharacterBody2D"]
 motion_mode = 1
 slide_on_ceiling = false
-script = ExtResource("1_rj44r")
+script = ExtResource("1_gcm5v")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_os6uf")
+texture = ExtResource("2_hwpm4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ohi0u")
@@ -31,14 +31,21 @@ shape = SubResource("CircleShape2D_rm320")
 [node name="VisionCone" type="CollisionShape2D" parent="Detection"]
 shape = SubResource("ConvexPolygonShape2D_dx440")
 
+[node name="RndStateUpdate" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
 [node name="detectedStateUpdate" type="Timer" parent="."]
 
 [node name="IdleWander" type="Timer" parent="."]
 one_shot = true
-script = ExtResource("3_gd2aq")
+script = ExtResource("3_dtdih")
 
 [node name="DeathTimer" type="Timer" parent="."]
 wait_time = 1.5
 one_shot = true
 
+[connection signal="body_entered" from="Detection" to="." method="_on_detection_body_entered"]
+[connection signal="timeout" from="RndStateUpdate" to="." method="_on_rnd_state_update_timeout"]
+[connection signal="timeout" from="IdleWander" to="." method="_on_idle_wander_timeout"]
 [connection signal="timeout" from="IdleWander" to="IdleWander" method="_on_timeout"]

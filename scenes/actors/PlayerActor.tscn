@@ -1,8 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bb18ichexwbxh"]
+[gd_scene load_steps=8 format=3 uid="uid://cpgq1yd45d11p"]
 
-[ext_resource type="Script" path="res://scenes/actors/BasicActor.gd" id="1_rj44r"]
-[ext_resource type="Texture2D" uid="uid://bksgvob2vt0y4" path="res://icon.svg" id="2_os6uf"]
-[ext_resource type="Script" path="res://scripts/idle_wander.gd" id="3_gd2aq"]
+[ext_resource type="Script" path="res://scenes/actors/PlayerActor.gd" id="1_50gu6"]
+[ext_resource type="Texture2D" uid="uid://bksgvob2vt0y4" path="res://icon.svg" id="2_m6lmv"]
+[ext_resource type="Script" path="res://scripts/idle_wander.gd" id="3_0ms1c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ohi0u"]
 size = Vector2(128, 128)
@@ -12,13 +12,16 @@ size = Vector2(128, 128)
 [sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_dx440"]
 points = PackedVector2Array(0, 0)
 
-[node name="BasicActor" type="CharacterBody2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_ka2um"]
+radius = 20.0
+
+[node name="PlayerActor" type="CharacterBody2D"]
 motion_mode = 1
 slide_on_ceiling = false
-script = ExtResource("1_rj44r")
+script = ExtResource("1_50gu6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_os6uf")
+texture = ExtResource("2_m6lmv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ohi0u")
@@ -31,14 +34,31 @@ shape = SubResource("CircleShape2D_rm320")
 [node name="VisionCone" type="CollisionShape2D" parent="Detection"]
 shape = SubResource("ConvexPolygonShape2D_dx440")
 
+[node name="Grabbing" type="Area2D" parent="."]
+
+[node name="Circle" type="CollisionShape2D" parent="Grabbing"]
+shape = SubResource("CircleShape2D_ka2um")
+
+[node name="RndStateUpdate" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
 [node name="detectedStateUpdate" type="Timer" parent="."]
 
 [node name="IdleWander" type="Timer" parent="."]
 one_shot = true
-script = ExtResource("3_gd2aq")
+script = ExtResource("3_0ms1c")
 
 [node name="DeathTimer" type="Timer" parent="."]
 wait_time = 1.5
+one_shot = true
+
+[node name="LifeTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="ReproductionTimer" type="Timer" parent="."]
+wait_time = 3.0
 one_shot = true
 
 [connection signal="timeout" from="IdleWander" to="IdleWander" method="_on_timeout"]
