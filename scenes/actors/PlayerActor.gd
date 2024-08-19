@@ -1,6 +1,5 @@
 class_name PlayerActor extends BasicActor
 
-
 signal offspring(pos: Vector2)
 
 const BASE_HUNGER = .025
@@ -71,7 +70,6 @@ func oneshot_reproduce():
 	food -= attrs.birthFood.value
 	$ReproductionTimer.start()
 	
-
 
 func update_state_rnd():
 	match smInst.state:

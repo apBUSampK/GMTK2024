@@ -9,13 +9,15 @@ process_mode = 3
 script = ExtResource("1_mvqm1")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)
 
 [node name="Mutation" parent="Camera2D" instance=ExtResource("2_vmace")]
 process_mode = 2
 visible = false
 
-[node name="PlayerActor" parent="." instance=ExtResource("3_lavn3")]
+[node name="PlayerActor" parent="." node_paths=PackedStringArray("mutScreen") instance=ExtResource("3_lavn3")]
+mutScreen = NodePath("../Camera2D/Mutation")
 
-[node name="Line2D" type="Line2D" parent="."]
-points = PackedVector2Array(0, 0)
-width = 2.0
+[node name="PlayerActor2" parent="." node_paths=PackedStringArray("mutScreen") instance=ExtResource("3_lavn3")]
+position = Vector2(-222, -7)
+mutScreen = NodePath("../Camera2D/Mutation")

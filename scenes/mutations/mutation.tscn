@@ -68,3 +68,5 @@ text = "OK
 flat = true
 alignment = 0
 icon_alignment = 1
+
+[connection signal="pressed" from="Control/Scroll/MutationContainer/Done" to="." method="_on_done_pressed"]

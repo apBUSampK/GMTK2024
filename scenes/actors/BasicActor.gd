@@ -10,6 +10,7 @@ const attributor = preload("res://scripts/attributor.gd")
 const sm = preload("res://scripts/state_machine.gd")
 const child = preload("res://scenes/actors/BasicActor.tscn")
 const genes = preload("res://scripts/genes.gd")
+const foodType = preload("res://scripts/food.gd")
 @export var mutScreen: CanvasLayer
 
 var attrs: attributor.Attributor
@@ -22,7 +23,11 @@ var desiredPosition = Vector2.ZERO
 # This will be the enemy we're avoiding, or the food we want to grab
 var targetObj: CollisionObject2D
 
-var Genes: Array[genes.Genes] = [genes.Genes.Calm, genes.Genes.Agile]
+var Genes: Array[genes.Genes] = []
+
+func debug_list_attrs():
+	print(name)
+	attrs.debug_list_props()
 
 func setupStateMachine():
 	smInst = sm.StateMachine.new(sm.States.IDLE)
@@ -76,14 +81,14 @@ func attack():
 	print("Attack")
 	return
 
-func grab() -> Food:
+func grab() -> foodType:
 	#print("Grab")
 	if not targetObj:
 		smInst.SetState(sm.States.IDLE)
 		return null
 	for index in get_slide_collision_count():
 		var collisionObj := get_slide_collision(index).get_collider()
-		if collisionObj and collisionObj is Food:
+		if collisionObj and collisionObj is foodType:
 			targetObj = null
 			smInst.SetState(sm.States.IDLE)
 			return collisionObj
@@ -132,7 +137,7 @@ func _ready():
 func update(delta):	
 	# Main state machine loop
 	smInst.process()
-	print(smInst.state)
+	#print(smInst.state)
 
 func _process(delta):
 	update(delta)
@@ -164,20 +169,19 @@ func _on_idle_wander_timeout() -> void:
 	# Update desired position in idle wandering
 	if smInst.state == sm.States.IDLE:
 		desiredPosition = position + Vector2.UP.rotated(randf_range(0, 2*PI)) * IDLE_WANDER_DIST
-		$"../Line2D".add_point(desiredPosition)
 		$IdleWander.Init()
 	return
 
 func _on_detection_body_entered(body: Node2D) -> void:
 	if body == self:
 		return
-	if body is Food and not targetObj:
+	if body is foodType and not targetObj:
 		smInst.SetState(sm.States.GRABBING)
 		desiredPosition = body.position
 		targetObj = body
 		return
 
-func _on_input_event(viewport, event, shape_idx):
+func _on_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
 			mutScreen.LoadGenesForActor(self)

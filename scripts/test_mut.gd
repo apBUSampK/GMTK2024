@@ -1,6 +1,6 @@
 extends TextureButton
 
-const Genes = preload("res://scripts/genes.gd")
+const genes = preload("res://scripts/genes.gd")
 
 var thisGene
 
@@ -14,7 +14,7 @@ func SetTextShort():
 
 func SetTextFull():
 	var text = thisGene + "\n"
-	for attr in Genes.Descriptions[thisGene]:
+	for attr in genes.Descriptions[thisGene]:
 		text += attr
 	$Text.text = text
 

@@ -44,3 +44,5 @@ tmax = 3.0
 [node name="DeathTimer" type="Timer" parent="."]
 wait_time = 1.5
 one_shot = true
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]

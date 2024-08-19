@@ -4,13 +4,13 @@ class Attribute:
 	var name: String
 	var value
 	var much_change
-	var slight_change
+	var slightly_change
 	
-	func _init(name_: String, value_, much_change_=10, slight_change_=10):
+	func _init(name_: String, value_, much_change_=10, slightly_change_=10):
 		self.name = name_
 		self.value = value_
 		self.much_change = much_change_
-		self.slight_change = slight_change_
+		self.slightly_change = slightly_change_
 	
 class Attributor:
 	# lifetime (in seconds)
@@ -25,8 +25,8 @@ class Attributor:
 	# attack speed
 	var attackSpeed = Attribute.new("attack speped", 1.0)
 	
-	# aggresivity
-	var aggresivity = Attribute.new("aggresivity", 0.0)
+	# aggression
+	var aggression = Attribute.new("aggression", 0.0)
 	
 	# curiosity
 	var curiosity = Attribute.new("curiosity", 0.1)
@@ -70,24 +70,35 @@ class Attributor:
 	# dictonary to keep relationsheep between class propery's name and attribute name 
 	var _attribute_name_to_property: Dictionary
 	
+	func debug_list_props():
+		for property in get_property_list():
+			var prop = self.get(property['name'])
+			if prop:
+				if prop is Attribute:
+					print("\t", property['name'], ": ", prop.value)
+	
 	# [DKay]: Unfortunately, this function can't be call from _init method 
-	#					so, we will call it from get/set property by attr function but with caching
+	#		  so, we will call it from get/set property by attr function but with caching
 	func fill_attr_to_property_dict():
 		if not _attribute_name_to_property.is_empty():
 			return
-
 		for property in get_property_list():
-			_attribute_name_to_property[(self.get(property['name'])).name] = property.name_
-
+			#print("Looking for ", property['name'], ", of class |", property['class_name'], 
+			#      "| hint ", property['hint'], ", type ", property['type'])
+			var prop = self.get(property['name'])
+			if prop:
+				if prop is Attribute:
+					_attribute_name_to_property[prop.name] = property.name
+	
 	func get_property_by_attribute_name(attribute_name: String):
 		fill_attr_to_property_dict()
-
+		
 		var property_name = _attribute_name_to_property[attribute_name]
 		return self.get(property_name)
-
+	
 	func set_property_by_attribute_name(attribute_name: String, property: Attribute):
 		fill_attr_to_property_dict()
-
+	
 		var property_name = _attribute_name_to_property[attribute_name]
 		self.set(property_name, property)
 	
