@@ -13,6 +13,7 @@ size = Vector2(128, 128)
 points = PackedVector2Array(0, 0)
 
 [node name="HostileActor" type="CharacterBody2D"]
+process_mode = 1
 motion_mode = 1
 slide_on_ceiling = false
 script = ExtResource("1_gcm5v")
