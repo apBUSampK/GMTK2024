@@ -11,7 +11,7 @@ var food: float
 func setupStateMachine():
 	smInst = sm.StateMachine.new(sm.States.IDLE)
 	var state_funcs = {
-		"IDLE": dummy,
+		"IDLE": idle,
 		"ATTACKING": attack,
 		"FLEEING": flee,
 		"REPRODUCING": dummy,
@@ -39,12 +39,27 @@ func _ready() -> void:
 	$RndStateUpdate.timeout.connect(_on_rnd_state_update_timeout)
 	$ReproductionTimer.timeout.connect(_on_reproduction_timer_timeout)
 
+func idle():
+	# passive food consumption
+	for index in get_slide_collision_count():
+		var collisionObj := get_slide_collision(index).get_collider()
+		if collisionObj and collisionObj is Food:
+			food += collisionObj.Consume()
+
 func grab() -> Food:
 	#print("Grab")
-	var grFood = super()
-	if grFood:
-		food += grFood.Consume()
-	return grFood
+	if not targetObj:
+		smInst.SetState(sm.States.IDLE)
+		return
+	for index in get_slide_collision_count():
+		var collisionObj := get_slide_collision(index).get_collider()
+		if collisionObj and collisionObj is Food:
+			targetObj = null
+			smInst.SetState(sm.States.IDLE)
+			# consume food
+			food += collisionObj.Consume()
+			return collisionObj
+	return
 
 func _on_reproduction_timer_timeout() -> void:
 	food -= attrs.birthFood.value
@@ -67,6 +82,7 @@ func _on_reproduction_timer_timeout() -> void:
 func oneshot_reproduce():
 	print("Repr")
 	print("Start birth")
+	desiredPosition = position
 	food -= attrs.birthFood.value
 	$ReproductionTimer.start()
 	
