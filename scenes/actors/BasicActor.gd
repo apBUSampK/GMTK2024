@@ -4,6 +4,7 @@ const EPS = 1e-2
 
 const IDLE_SPEED = .3
 const IDLE_WANDER_DIST = 250.
+const FLEE_DIST = 400.
 const DYING_SPEED = .1
 
 const attributor = preload("res://scripts/attributor.gd")
@@ -15,6 +16,7 @@ const foodType = preload("res://scripts/food.gd")
 
 var attrs: attributor.Attributor
 var smInst: sm.StateMachine
+var buffState: sm.States
 
 var hp: float
 var cSpeed: float
@@ -68,12 +70,15 @@ func setupSenseShapes():
 func dummy():
 	pass
 
-func idle():
-	# passive food destruction
+# passive food destruction
+func destroy_food() -> void:
 	for index in get_slide_collision_count():
 		var collisionObj := get_slide_collision(index).get_collider()
 		if collisionObj and collisionObj is Food:
 			collisionObj.Consume()
+
+func idle():
+	destroy_food()
 
 func oneshot_idle():
 	cSpeed = IDLE_SPEED * attrs.movementSpeed.value
@@ -85,11 +90,7 @@ func set_max_speed():
 
 func attack():
 	print("Attack")
-	# passive food destruction
-	for index in get_slide_collision_count():
-		var collisionObj := get_slide_collision(index).get_collider()
-		if collisionObj and collisionObj is Food:
-			collisionObj.Consume()
+	destroy_food()
 	return
 
 func grab():
@@ -109,20 +110,12 @@ func grab():
 
 func flee():
 	print("Flee")
-	# passive food destruction
-	for index in get_slide_collision_count():
-		var collisionObj := get_slide_collision(index).get_collider()
-		if collisionObj and collisionObj is Food:
-			collisionObj.Consume()
+	destroy_food()
 	return
 
 func scout():
 	print("Scout")
-	# passive food destruction
-	for index in get_slide_collision_count():
-		var collisionObj := get_slide_collision(index).get_collider()
-		if collisionObj and collisionObj is Food:
-			collisionObj.Consume()
+	destroy_food()
 	return
 
 func oneshot_die():
@@ -191,18 +184,29 @@ func _on_idle_wander_timeout() -> void:
 	# Update desired position in idle wandering
 	if smInst.state == sm.States.IDLE:
 		desiredPosition = position + Vector2.UP.rotated(randf_range(0, 2*PI)) * IDLE_WANDER_DIST
-		$"../Line2D".add_point(desiredPosition)
 	$IdleWander.Init()
 	return
+
+func react_to_food(body: Food) -> void:
+	smInst.SetState(sm.States.GRABBING)
+	desiredPosition = body.position
+	targetObj = body
+
+func react_to_enemy() -> void:
+	if smInst.state != sm.States.REPRODUCING:
+		buffState = smInst.state
+		if randf_range(0, 1) < attrs.aggression.value:
+			smInst.SetState(sm.States.ATTACKING)
+		elif randf_range(0, 1) > attrs.guts.value:
+			smInst.SetState(sm.States.FLEEING)
 
 func _on_detection_body_entered(body: Node2D) -> void:
 	if body == self:
 		return
-	if body is foodType and not targetObj:
-		smInst.SetState(sm.States.GRABBING)
-		desiredPosition = body.position
-		targetObj = body
+	if body is Food and not targetObj:
+		react_to_food(body)
 		return
+
 
 func _on_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton:

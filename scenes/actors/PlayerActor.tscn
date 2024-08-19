@@ -56,4 +56,5 @@ autostart = true
 wait_time = 3.0
 one_shot = true
 
-[connection signal="timeout" from="IdleWander" to="IdleWander" method="_on_timeout"]
+[node name="AttackTimer" type="Timer" parent="."]
+one_shot = true
