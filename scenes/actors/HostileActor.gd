@@ -2,10 +2,13 @@ class_name HostileActor extends BasicActor
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	super()
+	attrs.guts.value=1
+	attrs.aggression.value=1
 	# connect signals
 	$detectedStateUpdate.timeout.connect(_on_detected_state_update_timeout)
 
-func _on_detection_body_entered(body: Node2D) -> void:
+func _on_detection_body_entered(body) -> void:
 	if body is PlayerActor:
 		react_to_enemy()
 	if $detectedStateUpdate.is_stopped():
@@ -29,7 +32,6 @@ func attack() -> void:
 	for i in get_slide_collision_count():
 		var collisionObj := get_slide_collision(i).get_collider()
 		if collisionObj is PlayerActor:
-			desiredPosition = position
 			if $AttackTimer.is_stopped():
 				collisionObj.hp -= attrs.damage.value
 				$AttackTimer.start()
@@ -55,5 +57,5 @@ func flee() -> void:
 			heading += (position - body.position).normalized()
 	if heading != Vector2.ZERO:
 		desiredPosition = position + heading * FLEE_DIST
-	elif desiredPosition == position:
+	elif (desiredPosition - position).length() < EPS:
 		smInst.SetState(buffState)

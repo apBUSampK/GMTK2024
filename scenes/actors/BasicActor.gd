@@ -78,6 +78,7 @@ func destroy_food() -> void:
 			collisionObj.Consume()
 
 func idle():
+	print("Idle")
 	destroy_food()
 
 func oneshot_idle():
@@ -94,7 +95,7 @@ func attack():
 	return
 
 func grab():
-	#print("Grab")
+	print("Grab")
 	if not targetObj:
 		smInst.SetState(sm.States.IDLE)
 		return
@@ -148,14 +149,12 @@ func _ready():
 	$IdleWander.timeout.connect(_on_idle_wander_timeout)
 	$Detection.body_entered.connect(_on_detection_body_entered)
 	input_event.connect(_on_input_event)
-
-func update(delta):	
-	# Main state machine loop
-	smInst.process()
-	#print(smInst.state)
+	$DeathTimer.timeout.connect(_on_death_timer_timeout)
 
 func _process(delta):
-	update(delta)
+	smInst.process()
+	if hp <= 0:
+		smInst.SetState(sm.States.DYING)
 
 func rotate_to_face(delta, pos) -> bool:
 	var delta_angle = position.angle_to_point(pos) - rotation
@@ -188,19 +187,21 @@ func _on_idle_wander_timeout() -> void:
 	return
 
 func react_to_food(body: Food) -> void:
-	smInst.SetState(sm.States.GRABBING)
-	desiredPosition = body.position
-	targetObj = body
+	if smInst.state == sm.States.IDLE:
+		smInst.SetState(sm.States.GRABBING)
+		desiredPosition = body.position
+		targetObj = body
 
 func react_to_enemy() -> void:
-	if smInst.state != sm.States.REPRODUCING:
-		buffState = smInst.state
+	if smInst.state != sm.States.REPRODUCING  and smInst.state != sm.States.DYING:
+		if smInst.state != sm.States.FLEEING and smInst.state != sm.States.ATTACKING:
+			buffState = smInst.state
 		if randf_range(0, 1) < attrs.aggression.value:
 			smInst.SetState(sm.States.ATTACKING)
 		elif randf_range(0, 1) > attrs.guts.value:
 			smInst.SetState(sm.States.FLEEING)
 
-func _on_detection_body_entered(body: Node2D) -> void:
+func _on_detection_body_entered(body) -> void:
 	if body == self:
 		return
 	if body is Food and not targetObj:
@@ -212,3 +213,7 @@ func _on_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
 			mutScreen.LoadGenesForActor(self)
+
+
+func _on_death_timer_timeout():
+	queue_free()

@@ -41,4 +41,7 @@ script = ExtResource("3_dtdih")
 wait_time = 1.5
 one_shot = true
 
+[node name="AttackTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="timeout" from="IdleWander" to="IdleWander" method="_on_timeout"]

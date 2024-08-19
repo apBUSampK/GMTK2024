@@ -35,19 +35,19 @@ class Attributor:
 	var movementSpeed = Attribute.new("speed", 600.0)
 	
 	# turning speed in radians
-	var turnSpeed = Attribute.new("turning speed", 1)
+	var turnSpeed = Attribute.new("turning speed", 3)
 	
 	# how brave the creature is
 	var guts = Attribute.new("guts", 0.0)
 	
 	# range of view
-	var viewRange = Attribute.new("view range", 300.0)
+	var viewRange = Attribute.new("view range", 400.0)
 	
 	# field of view in radians
-	var fieldOfView = Attribute.new("field of view", PI / 2)
+	var fieldOfView = Attribute.new("field of view", PI / 3)
 	
 	# radius in which the creature can sense other creatures even outside fov
-	var senseRadius = Attribute.new("sense radius", 1.0)
+	var senseRadius = Attribute.new("sense radius", 100.0)
 	
 	# minimum temperature that the creature can survive, in Kelvins
 	var minTemp = Attribute.new("minimal temerature", 273.0)

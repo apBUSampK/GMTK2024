@@ -43,6 +43,14 @@ func _ready() -> void:
 	$detectedStateUpdate.timeout.connect(_on_detected_state_update_timeout)
 	$LifeTimer.timeout.connect(_on_life_timer_timeout)
 
+func _process(delta):
+	super(delta)
+	food -= BASE_HUNGER * attrs.hungerRate.value * delta
+	if food > attrs.maxFood.value:
+		food = attrs.maxFood.value
+	if food <= 0:
+		smInst.SetState(sm.States.DYING)
+
 func idle() -> void:
 	# passive food consumption
 	for index in get_slide_collision_count():
@@ -59,7 +67,8 @@ func flee() -> void:
 			heading += (position - body.position).normalized()
 	if heading != Vector2.ZERO:
 		desiredPosition = position + heading * FLEE_DIST
-	elif desiredPosition == position:
+	var delta_pos = desiredPosition - position
+	if delta_pos.length() > EPS * attrs.movementSpeed.value:
 		smInst.SetState(buffState)
 
 func attack() -> void:
@@ -68,7 +77,6 @@ func attack() -> void:
 	for i in get_slide_collision_count():
 		var collisionObj := get_slide_collision(i).get_collider()
 		if collisionObj is HostileActor:
-			desiredPosition = position
 			if $AttackTimer.is_stopped():
 				collisionObj.hp -= attrs.damage.value
 				$AttackTimer.start()
@@ -85,8 +93,8 @@ func attack() -> void:
 		if not seeEnemy:
 			smInst.SetState(buffState)
 
-func grab() -> Food:
-	#print("Grab")
+func grab():
+	print("Grab")
 	if not targetObj:
 		smInst.SetState(sm.States.IDLE)
 		return
@@ -97,7 +105,7 @@ func grab() -> Food:
 			smInst.SetState(sm.States.IDLE)
 			# consume food
 			food += collisionObj.Consume()
-			return collisionObj
+			return
 	return
 
 func _on_reproduction_timer_timeout() -> void:
@@ -129,7 +137,7 @@ func _on_rnd_state_update_timeout() -> void:
 	update_state_rnd()
 	return
 
-func _on_detection_body_entered(body: Node2D) -> void:
+func _on_detection_body_entered(body) -> void:
 	super(body)
 	if body is HostileActor:
 		react_to_enemy()
