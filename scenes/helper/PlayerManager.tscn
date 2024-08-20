@@ -1,10 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://dho7yfjj2twma"]
+[gd_scene load_steps=4 format=3 uid="uid://dho7yfjj2twma"]
 
 [ext_resource type="Script" path="res://scripts/PlayerManager.gd" id="1_gkkpk"]
-[ext_resource type="Texture2D" uid="uid://bksgvob2vt0y4" path="res://icon.svg" id="2_4pt1j"]
+
+[sub_resource type="Gradient" id="Gradient_ytogr"]
+offsets = PackedFloat32Array(0, 0.382166, 0.707006)
+colors = PackedColorArray(0, 0, 0, 0, 1, 0.0156863, 0.105882, 1, 1, 0.0156863, 0.105882, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gpw8d"]
+gradient = SubResource("Gradient_ytogr")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0, 0)
 
 [node name="PlayerManager" type="Node2D"]
 script = ExtResource("1_gkkpk")
 
 [node name="Marker" type="Sprite2D" parent="."]
-texture = ExtResource("2_4pt1j")
+texture = SubResource("GradientTexture2D_gpw8d")
