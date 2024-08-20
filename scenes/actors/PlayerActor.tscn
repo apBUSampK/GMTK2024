@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b8gs1agqdboak"]
+[gd_scene load_steps=15 format=3 uid="uid://b8gs1agqdboak"]
 
 [ext_resource type="Script" path="res://scenes/actors/PlayerActor.gd" id="1_50gu6"]
 [ext_resource type="Script" path="res://scripts/idle_wander.gd" id="3_0ms1c"]
@@ -63,6 +63,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_je8aj"]
+size = Vector2(128, 128)
+
 [node name="PlayerActor" type="CharacterBody2D"]
 process_mode = 1
 input_pickable = true
@@ -112,3 +115,6 @@ rotation = 0.872665
 scale = Vector2(0.15, 0.15)
 sprite_frames = SubResource("SpriteFrames_h6ejm")
 animation = &"hero-form-1-movement"
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_je8aj")

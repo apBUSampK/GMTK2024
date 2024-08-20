@@ -61,12 +61,15 @@ func _process(delta):
 	if food <= 0:
 		smInst.SetState(sm.States.DYING)
 
-func idle() -> void:
+func consume_food():
 	# passive food consumption
 	for index in get_slide_collision_count():
 		var collisionObj := get_slide_collision(index).get_collider()
 		if collisionObj and collisionObj is Food:
 			food += collisionObj.Consume()
+
+func idle() -> void:
+	consume_food()
 
 func flee() -> void:
 	super()
@@ -104,6 +107,7 @@ func attack() -> void:
 			smInst.SetState(buffState)
 
 func scout():
+	consume_food()
 	if not scoutingSet:
 		smInst.SetState(sm.States.IDLE)
 		return
@@ -113,7 +117,7 @@ func scout():
 		return
 	if (desiredPosition - position).length() < EPS * attrs.movementSpeed.value:
 		desiredPosition = position + deltaScouting.normalized().rotated(
-			randf_range(-SCOUTING_RANDOM_HEADING / 2, SCOUTING_RANDOM_HEADING /2)) * randfn(
+			randf_range(-SCOUTING_RANDOM_HEADING / 2, SCOUTING_RANDOM_HEADING /2)) * randf_range(
 				SCOUTING_STEP_MIN, SCOUTING_STEP_MAX
 			)
 
@@ -149,9 +153,10 @@ func oneshot_reproduce():
 func update_state_rnd():
 	match smInst.state:
 		sm.States.IDLE:
-			if randf_range(0, 10) < attrs.curiosity.value:
+			if randf_range(0, 1) < attrs.curiosity.value:
 				smInst.SetState(sm.States.SCOUTING)
-			if randf_range(0, 10) < attrs.fertility.value and food > attrs.birthFood.value + REPRODUCTION_FOOD_LEFTOVER:
+				return
+			if randf_range(0, 1) < attrs.fertility.value and food > attrs.birthFood.value + REPRODUCTION_FOOD_LEFTOVER:
 				smInst.SetState(sm.States.REPRODUCING)
 		_:
 			return

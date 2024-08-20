@@ -43,12 +43,14 @@ func _process(delta: float) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_action_pressed("RMB"):
-		if (marker.position - event.position).length() > DELETE_MARKER_OFFSET or marker.visible == false:
-			marker.position = get_global_mouse_position()
+		var debug = marker.global_position - get_global_mouse_position()
+		if (marker.global_position - get_global_mouse_position()).length() > DELETE_MARKER_OFFSET or marker.visible == false:
+			marker.global_position = get_global_mouse_position()
+			marker.visible = true
 			for agent in agents:
 				agent.scoutingSet = true
 				agent.scoutingPosition = marker.position
 		else:
-			marker.visible == false
+			marker.visible = false
 			for agent in agents:
 				agent.scoutingSet = false

@@ -33,7 +33,6 @@ shape = SubResource("CircleShape2D_rm320")
 shape = SubResource("ConvexPolygonShape2D_dx440")
 
 [node name="IdleWander" type="Timer" parent="."]
-one_shot = true
 script = ExtResource("3_gd2aq")
 tmax = 3.0
 
