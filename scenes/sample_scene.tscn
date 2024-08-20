@@ -1,13 +1,16 @@
 [gd_scene load_steps=5 format=3 uid="uid://jgi3xmy3tqdn"]
 
 [ext_resource type="Script" path="res://scripts/sample_scene.gd" id="1_mvqm1"]
+[ext_resource type="PackedScene" uid="uid://dho7yfjj2twma" path="res://scenes/helper/PlayerManager.tscn" id="2_c2fqn"]
 [ext_resource type="PackedScene" uid="uid://isy45wwbgf0e" path="res://scenes/mutations/mutation.tscn" id="2_vmace"]
-[ext_resource type="PackedScene" uid="uid://b8gs1agqdboak" path="res://scenes/actors/PlayerActor.tscn" id="3_lavn3"]
 [ext_resource type="PackedScene" uid="uid://ctqka31wjgyc" path="res://scenes/actors/HostileActor.tscn" id="4_w8if1"]
 
 [node name="SampleScene" type="Node2D"]
 process_mode = 3
 script = ExtResource("1_mvqm1")
+
+[node name="PlayerManager" parent="." node_paths=PackedStringArray("mutScreen") instance=ExtResource("2_c2fqn")]
+mutScreen = NodePath("../Camera2D/Mutation")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.5, 0.5)
@@ -15,13 +18,6 @@ zoom = Vector2(0.5, 0.5)
 [node name="Mutation" parent="Camera2D" instance=ExtResource("2_vmace")]
 process_mode = 2
 visible = false
-
-[node name="PlayerActor" parent="." node_paths=PackedStringArray("mutScreen") instance=ExtResource("3_lavn3")]
-mutScreen = NodePath("../Camera2D/Mutation")
-
-[node name="PlayerActor2" parent="." node_paths=PackedStringArray("mutScreen") instance=ExtResource("3_lavn3")]
-position = Vector2(-222, -7)
-mutScreen = NodePath("../Camera2D/Mutation")
 
 [node name="HostileActor" parent="." node_paths=PackedStringArray("mutScreen") instance=ExtResource("4_w8if1")]
 position = Vector2(647, -355)

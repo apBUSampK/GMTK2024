@@ -10,6 +10,7 @@ func _ready():
 		var foodInst = food.instantiate()
 		foodInst.position = Vector2(randf_range(-512, 512), randf_range(-512, 512))
 		add_child(foodInst)
+	$PlayerManager.spawn_player(Vector2.ZERO)
 	return
 
 func _input(event):

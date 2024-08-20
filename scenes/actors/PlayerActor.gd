@@ -4,6 +4,13 @@ signal offspring(pos: Vector2)
 
 const BASE_HUNGER = .025
 const REPRODUCTION_FOOD_LEFTOVER = .5
+const SCOUTING_RANDOM_HEADING = PI/10 # divergence to plotted path heading while scouting
+const SCOUTING_IDLE_RANGE = 200. # swith to IDLE upon being that close to the marker
+const SCOUTING_STEP_MIN = 100.
+const SCOUTING_STEP_MAX = 500.
+
+var scoutingPosition: Vector2
+var scoutingSet := false
 
 var food: float
 
@@ -93,6 +100,20 @@ func attack() -> void:
 		if not seeEnemy:
 			smInst.SetState(buffState)
 
+func scout():
+	if scoutingSet:
+		smInst.SetState(sm.States.IDLE)
+		return
+	var deltaScouting = scoutingPosition - position
+	if deltaScouting.length() < SCOUTING_IDLE_RANGE:
+		smInst.SetState(sm.States.IDLE)
+		return
+	if (desiredPosition - position).length() < EPS * attrs.movementSpeed.value:
+		desiredPosition = position + deltaScouting.normalized().rotated(
+			randf_range(-SCOUTING_RANDOM_HEADING / 2, SCOUTING_RANDOM_HEADING /2)) * randfn(
+				SCOUTING_STEP_MIN, SCOUTING_STEP_MAX
+			)
+
 func grab():
 	print("Grab")
 	if not targetObj:
@@ -111,7 +132,7 @@ func grab():
 func _on_reproduction_timer_timeout() -> void:
 	food -= attrs.birthFood.value
 	smInst.SetState(sm.States.IDLE)
-	emit_signal("offspring")
+	emit_signal("offspring", position)
 
 # If we have enough food, start childbirth. When the timer expires, we will
 # spawn a child

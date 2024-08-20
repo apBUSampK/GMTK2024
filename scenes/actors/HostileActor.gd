@@ -57,5 +57,5 @@ func flee() -> void:
 			heading += (position - body.position).normalized()
 	if heading != Vector2.ZERO:
 		desiredPosition = position + heading * FLEE_DIST
-	elif (desiredPosition - position).length() < EPS:
+	elif (desiredPosition - position).length() < EPS * attrs.movementSpeed.value:
 		smInst.SetState(buffState)
