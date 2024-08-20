@@ -101,7 +101,7 @@ func attack() -> void:
 			smInst.SetState(buffState)
 
 func scout():
-	if scoutingSet:
+	if not scoutingSet:
 		smInst.SetState(sm.States.IDLE)
 		return
 	var deltaScouting = scoutingPosition - position
