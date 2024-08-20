@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://b8h5iakd2712o"]
 
-[ext_resource type="Texture2D" uid="uid://c70j2b2aumxd2" path="res://amoeba.png" id="1_hjikr"]
+[ext_resource type="Texture2D" uid="uid://c70j2b2aumxd2" path="res://hero-form1-movement.png" id="1_hjikr"]
 
 [sub_resource type="Animation" id="Animation_e7vw2"]
 length = 0.001

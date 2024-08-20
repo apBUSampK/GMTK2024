@@ -55,8 +55,18 @@ func _ready() -> void:
 
 func _process(delta):	
 	super(delta)
-	_animated_sprite.play("hero-form-2-movement")
+<<<<<<< HEAD
+	var anim = int(get_parent().get_parent().lvl / 2) + 1
+	_animated_sprite.play("hero-form-" + str(anim) + "-movement")
+=======
+	_animated_sprite.play("hero-form-1-movement") 
+>>>>>>> origin/dkay-adding-actor-scaling
 	
+	var form_changed = food < 7
+	if form_changed: # TODO insert form change here.
+		_animated_sprite.stop() 
+		_animated_sprite.play("hero-form-2-movement")
+		
 	food -= BASE_HUNGER * attrs.hungerRate.value * delta
 	if food > attrs.maxFood.value:
 		food = attrs.maxFood.value
