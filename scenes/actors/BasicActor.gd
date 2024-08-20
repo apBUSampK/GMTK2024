@@ -12,7 +12,8 @@ const sm = preload("res://scripts/state_machine.gd")
 const child = preload("res://scenes/actors/BasicActor.tscn")
 const genes = preload("res://scripts/genes.gd")
 const foodType = preload("res://scripts/food.gd")
-@export var mutScreen: CanvasLayer
+
+@onready var mutScreen: Control = $"../Canvas/MutScreen"
 
 var attrs: attributor.Attributor
 var smInst: sm.StateMachine
@@ -25,6 +26,7 @@ var desiredPosition = Vector2.ZERO
 # This will be the enemy we're avoiding, or the food we want to grab
 var targetObj: CollisionObject2D
 
+var GenesLvl = 1
 var Genes: Array[genes.Genes] = []
 
 func debug_list_attrs():
@@ -78,7 +80,7 @@ func destroy_food() -> void:
 			collisionObj.Consume()
 
 func idle():
-	print("Idle")
+	#print("Idle")
 	destroy_food()
 
 func oneshot_idle():
@@ -90,12 +92,12 @@ func set_max_speed():
 	return
 
 func attack():
-	print("Attack")
+	#print("Attack")
 	destroy_food()
 	return
 
 func grab():
-	print("Grab")
+	#print("Grab")
 	if not targetObj:
 		smInst.SetState(sm.States.IDLE)
 		return
@@ -110,12 +112,12 @@ func grab():
 	return
 
 func flee():
-	print("Flee")
+	#print("Flee")
 	destroy_food()
 	return
 
 func scout():
-	print("Scout")
+	#print("Scout")
 	destroy_food()
 	return
 

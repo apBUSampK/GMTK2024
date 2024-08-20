@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://b8h5iakd2712o"]
+
+[ext_resource type="Texture2D" uid="uid://c70j2b2aumxd2" path="res://amoeba.png" id="1_hjikr"]
+
+[sub_resource type="Animation" id="Animation_e7vw2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_h3stn"]
+resource_name = "idle"
+length = 1.5
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1, 1.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ur3tx"]
+_data = {
+"RESET": SubResource("Animation_e7vw2"),
+"idle": SubResource("Animation_h3stn")
+}
+
+[node name="PlayerSprite" type="Sprite2D"]
+position = Vector2(-23, -4)
+rotation = 0.815069
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("1_hjikr")
+hframes = 3
+vframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ur3tx")
+}
+autoplay = "idle"
+speed_scale = 1.5

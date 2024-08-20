@@ -1,11 +1,11 @@
-extends CanvasLayer
+extends Control
 
 const Mut = preload("res://scenes/mutations/mut.tscn")
 const PossibleMut = preload("res://scenes/mutations/possible_mut.tscn")
 const attributor = preload("res://scripts/attributor.gd")
 const genes = preload("res://scripts/genes.gd")
 
-@export var MutCont: Container
+@export var MutCont: Control
 
 var currActor: BasicActor
 var newMutations: Array[TabContainer]
@@ -16,7 +16,7 @@ func readyMenuForActor(actor: BasicActor):
 	show()
 	currActor = actor
 	actor.modulate.v *= 1.5
-	actor.debug_list_attrs()
+	#actor.debug_list_attrs()
 
 func destrMenuForActor(actor: BasicActor):
 	hide()
@@ -25,29 +25,34 @@ func destrMenuForActor(actor: BasicActor):
 	for idx in range(1, MutCont.get_child_count()):
 		MutCont.get_child(idx).queue_free()
 	get_tree().paused = false
-	actor.debug_list_attrs()
+	#actor.debug_list_attrs()
 
 func LoadGenesForActor(actor: BasicActor):
 	readyMenuForActor(actor)
-	availGenes = genes.Genes.values().duplicate()
+	var lvl = actor.GenesLvl
+	availGenes = genes.Genes.values().duplicate().slice((lvl * 4 - 4), (lvl * 4))
 	for gene in actor.Genes:
 		availGenes.erase(gene)
 		var mutInst: TextureButton = Mut.instantiate()
 		mutInst.SetGene(genes.ToStr(gene))
 		mutInst.SetTextShort()
+		mutInst.z_index = gene
 		MutCont.add_child(mutInst)
 	MutCont.get_child(0).grab_focus()
-	NewMutation()
+	
+	newMutations = []
+	var needGenes = lvl * 2 - len(actor.Genes)
+	for idx in needGenes:
+		NewMutation(actor.GenesLvl, needGenes - idx + 1)
 
-func getRandomNewGene(from: Array) -> genes.Genes:
+func getRandomNewGene(from: Array, lvl: int) -> int:
 	if from.is_empty():
 		return -1
 	var choice = from.pick_random()
 	from.erase(choice)
 	return choice
 
-func NewMutation():
-	newMutations = []
+func NewMutation(lvl: int, z_idx: int):
 	var possible: TabContainer = PossibleMut.instantiate()
 	var mutInst: TextureButton
 	var gene: genes.Genes
@@ -57,19 +62,20 @@ func NewMutation():
 	
 	# Option 1
 	mutInst = Mut.instantiate()
-	gene = getRandomNewGene(availGenes)
+	gene = getRandomNewGene(availGenes, lvl)
 	if gene >= 0:
 		mutInst.SetGene(genes.ToStr(gene))
 		possible.add_child(mutInst)
 	
 	# Option 2
 	mutInst = Mut.instantiate()
-	gene = getRandomNewGene(availGenes)
+	gene = getRandomNewGene(availGenes, lvl)
 	if gene >= 0:
 		mutInst.SetGene(genes.ToStr(gene))
 		possible.add_child(mutInst)
 	
 	newMutations.append(possible)
+	possible.z_index = z_idx
 	MutCont.add_child(possible)
 
 func mutation_change_param(mutation_name: String, actor_attributes: attributor.Attributor):
@@ -84,10 +90,10 @@ func mutation_change_param(mutation_name: String, actor_attributes: attributor.A
 		var increase_strength = property.get(increase_strength_str)
 		
 		if (increase_type == 'less'):
-			print(attribute_name, " = ", new_property.value, " - ", increase_strength)
+			#print(attribute_name, " = ", new_property.value, " - ", increase_strength)
 			new_property.value -= increase_strength
 		else:
-			print(attribute_name, " = ", new_property.value, " + ", increase_strength)
+			#print(attribute_name, " = ", new_property.value, " + ", increase_strength)
 			new_property.value += increase_strength
 		
 		actor_attributes.set_property_by_attribute_name(attribute_name, new_property)
@@ -96,6 +102,7 @@ func mutation_change_param(mutation_name: String, actor_attributes: attributor.A
 func _on_done_pressed():
 	for newMut in newMutations:
 		var mutName = newMut.get_current_tab_control().name
+		#print("Adding ", mutName)
 		mutation_change_param(mutName, currActor.attrs)
 		currActor.Genes.append(genes.FromStr(mutName))
 	destrMenuForActor(currActor)

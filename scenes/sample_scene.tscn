@@ -1,9 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://jgi3xmy3tqdn"]
+[gd_scene load_steps=9 format=3 uid="uid://jgi3xmy3tqdn"]
 
 [ext_resource type="Script" path="res://scripts/sample_scene.gd" id="1_mvqm1"]
-[ext_resource type="PackedScene" uid="uid://dho7yfjj2twma" path="res://scenes/helper/PlayerManager.tscn" id="2_c2fqn"]
+[ext_resource type="FontFile" uid="uid://dbi25c35h2dgb" path="res://novem___.ttf" id="2_k2jr5"]
 [ext_resource type="PackedScene" uid="uid://isy45wwbgf0e" path="res://scenes/mutations/mutation.tscn" id="2_vmace"]
 [ext_resource type="PackedScene" uid="uid://ctqka31wjgyc" path="res://scenes/actors/HostileActor.tscn" id="4_w8if1"]
+[ext_resource type="AudioStream" uid="uid://btsktbrqhxdlq" path="res://1_Desire_to_Survive.mp3" id="6_dam2a"]
+
+[sub_resource type="Theme" id="Theme_i2v6r"]
+default_font = ExtResource("2_k2jr5")
+default_font_size = 64
+
+[sub_resource type="Gradient" id="Gradient_fkj42"]
+colors = PackedColorArray(0.552962, 1.35969e-06, 4.81307e-07, 1, 1, 1, 1, 1)
 
 [node name="SampleScene" type="Node2D"]
 process_mode = 3
@@ -13,12 +21,96 @@ script = ExtResource("1_mvqm1")
 mutScreen = NodePath("../Camera2D/Mutation")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.5, 0.5)
 
-[node name="Mutation" parent="Camera2D" instance=ExtResource("2_vmace")]
-process_mode = 2
+[node name="GetReady" type="Label" parent="Camera2D"]
+z_index = 1
+z_as_relative = false
+anchors_preset = -1
+anchor_top = -0.255
+anchor_bottom = -0.255
+offset_left = -1207.0
+offset_top = -664.0
+offset_right = -610.0
+offset_bottom = -533.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_i2v6r")
+text = "Get ready for 
+the next battle"
+vertical_alignment = 1
+
+[node name="PlayerActor" parent="." instance=ExtResource("3_lavn3")]
+
+[node name="PlayerActor2" parent="." instance=ExtResource("3_lavn3")]
+position = Vector2(-222, -7)
+
+[node name="HostileActor" parent="." instance=ExtResource("4_w8if1")]
+position = Vector2(647, -355)
+
+[node name="FoodContainer" type="Node2D" parent="."]
+
+[node name="Canvas" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="MutScreen" parent="Canvas" instance=ExtResource("2_vmace")]
 visible = false
 
-[node name="HostileActor" parent="." node_paths=PackedStringArray("mutScreen") instance=ExtResource("4_w8if1")]
-position = Vector2(647, -355)
-mutScreen = NodePath("../Camera2D/Mutation")
+[node name="PauseScreen" type="CanvasLayer" parent="Canvas"]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="Canvas/PauseScreen"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.282353)
+
+[node name="Paused" type="Label" parent="Canvas/PauseScreen"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_i2v6r")
+text = "PAUSED"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimerControl" type="Control" parent="Canvas"]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2560.0
+offset_top = -1440.0
+offset_right = -2560.0
+offset_bottom = -1440.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="TimerLine" type="Line2D" parent="Canvas/TimerControl"]
+top_level = true
+position = Vector2(1280, 720)
+points = PackedVector2Array(-640, -640, 0, -640)
+width = 40.0
+gradient = SubResource("Gradient_fkj42")
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="CrisisTimer" type="Timer" parent="."]
+process_mode = 1
+wait_time = 30.0
+one_shot = true
+autostart = true
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_dam2a")
+autoplay = true
+parameters/looping = false
+
+[connection signal="timeout" from="CrisisTimer" to="." method="_on_crisis_timer_timeout"]
+[connection signal="finished" from="Music" to="." method="_on_music_finished"]

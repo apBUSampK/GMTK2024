@@ -1,5 +1,11 @@
 class_name HostileActor extends BasicActor
+@onready var _animated_sprite = $AnimatedSprite2D
 
+func _process(delta):
+	super(delta)
+	_animated_sprite.play("movement")
+
+	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	super()

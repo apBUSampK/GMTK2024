@@ -23,7 +23,7 @@ class Attributor:
 	var damage = Attribute.new("damage", 20.0)
 	
 	# attack speed
-	var attackSpeed = Attribute.new("attack speped", 1.0)
+	var attackSpeed = Attribute.new("attack_speed", 1.0)
 	
 	# aggression
 	var aggression = Attribute.new("aggression", 0.0)
@@ -35,34 +35,34 @@ class Attributor:
 	var movementSpeed = Attribute.new("speed", 600.0)
 	
 	# turning speed in radians
-	var turnSpeed = Attribute.new("turning speed", 3)
+	var turnSpeed = Attribute.new("turning_speed", 3)
 	
 	# how brave the creature is
 	var guts = Attribute.new("guts", 0.0)
 	
 	# range of view
-	var viewRange = Attribute.new("view range", 400.0)
+	var viewRange = Attribute.new("view_range", 400.0)
 	
 	# field of view in radians
-	var fieldOfView = Attribute.new("field of view", PI / 3)
+	var fieldOfView = Attribute.new("field_of_view", PI / 3)
 	
 	# radius in which the creature can sense other creatures even outside fov
-	var senseRadius = Attribute.new("sense radius", 100.0)
+	var senseRadius = Attribute.new("sense_radius", 100.0)
 	
 	# minimum temperature that the creature can survive, in Kelvins
-	var minTemp = Attribute.new("minimal temerature", 273.0)
+	var minTemp = Attribute.new("minimal_temerature", 273.0)
 	
 	# maximum temperature that the creature can survive, in Kelvins
-	var maxTemp = Attribute.new("maximum temerature", 333.0)
+	var maxTemp = Attribute.new("maximum_temerature", 333.0)
 	
 	# minimum food amount for the creature to survive
-	var maxFood = Attribute.new("maximum food", 10.0)
+	var maxFood = Attribute.new("maximum_food", 10.0)
 	
 	# amount of food that is needed for childbirth
-	var birthFood = Attribute.new("birth food", 8.0)
+	var birthFood = Attribute.new("birth_food", 8.0)
 	
 	# food digestion pace
-	var hungerRate = Attribute.new("hunger rate", 1.0)
+	var hungerRate = Attribute.new("hunger_rate", 1.0)
 	
 	# fertility (chance for producing offspring if food is sufficient on state update)
 	var fertility = Attribute.new("fertility", .7)

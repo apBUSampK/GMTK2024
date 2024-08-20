@@ -115,7 +115,7 @@ func scout():
 			)
 
 func grab():
-	print("Grab")
+	#print("Grab")
 	if not targetObj:
 		smInst.SetState(sm.States.IDLE)
 		return
