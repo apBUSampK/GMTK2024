@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bb18ichexwbxh"]
 
 [ext_resource type="Script" path="res://scenes/actors/BasicActor.gd" id="1_rj44r"]
-[ext_resource type="Texture2D" uid="uid://bksgvob2vt0y4" path="res://icon.svg" id="2_os6uf"]
+[ext_resource type="PackedScene" uid="uid://b8h5iakd2712o" path="res://scenes/player_sprite.tscn" id="2_chuqk"]
 [ext_resource type="Script" path="res://scripts/idle_wander.gd" id="3_gd2aq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ohi0u"]
@@ -19,9 +19,7 @@ motion_mode = 1
 slide_on_ceiling = false
 script = ExtResource("1_rj44r")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_os6uf")
+[node name="PlayerSprite" parent="." instance=ExtResource("2_chuqk")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ohi0u")

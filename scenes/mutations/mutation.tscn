@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://isy45wwbgf0e"]
+[gd_scene load_steps=7 format=3 uid="uid://isy45wwbgf0e"]
 
 [ext_resource type="Script" path="res://scripts/mutation.gd" id="1_yn3yd"]
+[ext_resource type="FontFile" uid="uid://dbi25c35h2dgb" path="res://novem___.ttf" id="2_q74oy"]
 
 [sub_resource type="Gradient" id="Gradient_ewun3"]
 offsets = PackedFloat32Array(0, 0.37013, 1)
@@ -14,52 +15,51 @@ fill_from = Vector2(0.224771, 0.857798)
 fill_to = Vector2(0.862385, 0.133028)
 
 [sub_resource type="Theme" id="Theme_ohali"]
-default_font_size = 32
+default_font = ExtResource("2_q74oy")
+default_font_size = 60
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8cbut"]
 bg_color = Color(0.436893, 0.786377, 0.459043, 1)
 
-[node name="CanvasLayer" type="CanvasLayer" node_paths=PackedStringArray("MutCont")]
-script = ExtResource("1_yn3yd")
-MutCont = NodePath("Control/Scroll/MutationContainer")
-
-[node name="Control" type="Control" parent="."]
+[node name="MutScreen" type="Control" node_paths=PackedStringArray("MutCont")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("1_yn3yd")
+MutCont = NodePath("Scroll/MutationContainer")
 
-[node name="BG" type="TextureRect" parent="Control"]
+[node name="BG" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = -8.0
-offset_top = 474.0
-offset_right = 1152.0
-offset_bottom = 671.0
+offset_left = -6.0
+offset_top = 493.0
+offset_right = 1293.0
+offset_bottom = 752.0
 texture = SubResource("GradientTexture2D_iiryp")
 expand_mode = 1
 
-[node name="Scroll" type="ScrollContainer" parent="Control"]
+[node name="Scroll" type="ScrollContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 48.0
-offset_top = 456.0
-offset_right = 1072.0
-offset_bottom = 607.0
+offset_left = 50.0
+offset_top = 475.0
+offset_right = 1165.0
+offset_bottom = 657.0
 grow_horizontal = 2
 grow_vertical = 2
 follow_focus = true
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 0
 
-[node name="MutationContainer" type="HBoxContainer" parent="Control/Scroll"]
+[node name="MutationContainer" type="HBoxContainer" parent="Scroll"]
 layout_mode = 2
 alignment = 1
 
-[node name="Done" type="Button" parent="Control/Scroll/MutationContainer"]
+[node name="Done" type="Button" parent="Scroll/MutationContainer"]
 layout_mode = 2
 theme = SubResource("Theme_ohali")
 theme_override_styles/focus = SubResource("StyleBoxFlat_8cbut")
@@ -69,4 +69,4 @@ flat = true
 alignment = 0
 icon_alignment = 1
 
-[connection signal="pressed" from="Control/Scroll/MutationContainer/Done" to="." method="_on_done_pressed"]
+[connection signal="pressed" from="Scroll/MutationContainer/Done" to="." method="_on_done_pressed"]

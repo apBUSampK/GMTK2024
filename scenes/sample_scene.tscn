@@ -1,9 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://jgi3xmy3tqdn"]
+[gd_scene load_steps=8 format=3 uid="uid://jgi3xmy3tqdn"]
 
 [ext_resource type="Script" path="res://scripts/sample_scene.gd" id="1_mvqm1"]
+[ext_resource type="FontFile" uid="uid://dbi25c35h2dgb" path="res://novem___.ttf" id="2_k2jr5"]
 [ext_resource type="PackedScene" uid="uid://isy45wwbgf0e" path="res://scenes/mutations/mutation.tscn" id="2_vmace"]
 [ext_resource type="PackedScene" uid="uid://b8gs1agqdboak" path="res://scenes/actors/PlayerActor.tscn" id="3_lavn3"]
 [ext_resource type="PackedScene" uid="uid://ctqka31wjgyc" path="res://scenes/actors/HostileActor.tscn" id="4_w8if1"]
+
+[sub_resource type="Gradient" id="Gradient_fkj42"]
+colors = PackedColorArray(0.552962, 1.35969e-06, 4.81307e-07, 1, 1, 1, 1, 1)
+
+[sub_resource type="Theme" id="Theme_i2v6r"]
+default_font = ExtResource("2_k2jr5")
+default_font_size = 64
 
 [node name="SampleScene" type="Node2D"]
 process_mode = 3
@@ -12,17 +20,67 @@ script = ExtResource("1_mvqm1")
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.5, 0.5)
 
-[node name="Mutation" parent="Camera2D" instance=ExtResource("2_vmace")]
-process_mode = 2
+[node name="Timer" type="Line2D" parent="Camera2D"]
+top_level = true
+points = PackedVector2Array(-640, -640, 640, -640)
+width = 40.0
+gradient = SubResource("Gradient_fkj42")
+
+[node name="GetReady" type="Label" parent="Camera2D"]
+anchors_preset = -1
+anchor_top = -0.255
+anchor_bottom = -0.255
+offset_left = -1259.0
+offset_top = -691.0
+offset_right = -662.0
+offset_bottom = -560.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_i2v6r")
+text = "Get ready for 
+climate change"
+vertical_alignment = 1
+
+[node name="PlayerActor" parent="." instance=ExtResource("3_lavn3")]
+
+[node name="PlayerActor2" parent="." instance=ExtResource("3_lavn3")]
+position = Vector2(-222, -7)
+
+[node name="HostileActor" parent="." instance=ExtResource("4_w8if1")]
+position = Vector2(647, -355)
+
+[node name="FoodContainer" type="Node2D" parent="."]
+
+[node name="Canvas" type="CanvasLayer" parent="."]
+
+[node name="MutScreen" parent="Canvas" instance=ExtResource("2_vmace")]
 visible = false
 
-[node name="PlayerActor" parent="." node_paths=PackedStringArray("mutScreen") instance=ExtResource("3_lavn3")]
-mutScreen = NodePath("../Camera2D/Mutation")
+[node name="PauseScreen" type="CanvasLayer" parent="Canvas"]
+visible = false
 
-[node name="PlayerActor2" parent="." node_paths=PackedStringArray("mutScreen") instance=ExtResource("3_lavn3")]
-position = Vector2(-222, -7)
-mutScreen = NodePath("../Camera2D/Mutation")
+[node name="ColorRect" type="ColorRect" parent="Canvas/PauseScreen"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.282353)
 
-[node name="HostileActor" parent="." node_paths=PackedStringArray("mutScreen") instance=ExtResource("4_w8if1")]
-position = Vector2(647, -355)
-mutScreen = NodePath("../Camera2D/Mutation")
+[node name="Paused" type="Label" parent="Canvas/PauseScreen"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_i2v6r")
+text = "PAUSED"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CrisisTimer" type="Timer" parent="."]
+wait_time = 250.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="CrisisTimer" to="." method="_on_crisis_timer_timeout"]

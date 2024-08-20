@@ -1,6 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://ggqepi25bcdc"]
+[gd_scene load_steps=5 format=3 uid="uid://ggqepi25bcdc"]
 
+[ext_resource type="FontFile" uid="uid://dbi25c35h2dgb" path="res://novem___.ttf" id="1_lsv61"]
 [ext_resource type="Script" path="res://scripts/possible_mut.gd" id="1_wo7pi"]
+
+[sub_resource type="Theme" id="Theme_65led"]
+default_font = ExtResource("1_lsv61")
+default_font_size = 18
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ipa7f"]
 bg_color = Color(0.217743, 0.410311, 0.711606, 1)
@@ -15,8 +20,8 @@ offset_left = -4.0
 offset_right = 4.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = SubResource("Theme_65led")
 theme_override_styles/tab_selected = SubResource("StyleBoxFlat_ipa7f")
-tab_alignment = 1
 clip_tabs = false
 all_tabs_in_front = true
 tab_focus_mode = 0

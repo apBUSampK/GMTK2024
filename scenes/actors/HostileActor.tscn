@@ -14,6 +14,7 @@ points = PackedVector2Array(0, 0)
 
 [node name="HostileActor" type="CharacterBody2D"]
 process_mode = 1
+modulate = Color(1, 0, 0.0745098, 1)
 motion_mode = 1
 slide_on_ceiling = false
 script = ExtResource("1_gcm5v")
