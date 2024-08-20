@@ -14,7 +14,7 @@ height = 720
 fill_from = Vector2(0.224771, 0.857798)
 fill_to = Vector2(0.862385, 0.133028)
 
-[sub_resource type="Theme" id="Theme_ohali"]
+[sub_resource type="Theme" id="Theme_ml0yw"]
 default_font = ExtResource("2_q74oy")
 default_font_size = 60
 
@@ -23,45 +23,49 @@ bg_color = Color(0.436893, 0.786377, 0.459043, 1)
 
 [node name="MutScreen" type="Control" node_paths=PackedStringArray("MutCont")]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2560.0
+offset_top = -1440.0
+grow_horizontal = 0
+grow_vertical = 0
 script = ExtResource("1_yn3yd")
-MutCont = NodePath("Scroll/MutationContainer")
+MutCont = NodePath("BG/Scroll/MutationContainer")
 
 [node name="BG" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = -6.0
-offset_top = 493.0
-offset_right = 1293.0
-offset_bottom = 752.0
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2560.0
+offset_top = -420.0
+grow_horizontal = 0
+grow_vertical = 0
 texture = SubResource("GradientTexture2D_iiryp")
 expand_mode = 1
 
-[node name="Scroll" type="ScrollContainer" parent="."]
+[node name="Scroll" type="ScrollContainer" parent="BG"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 50.0
-offset_top = 475.0
-offset_right = 1165.0
-offset_bottom = 657.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = 55.0
+offset_top = 21.0
+offset_right = 2314.0
+offset_bottom = 394.0
+theme = SubResource("Theme_ml0yw")
 follow_focus = true
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 0
 
-[node name="MutationContainer" type="HBoxContainer" parent="Scroll"]
+[node name="MutationContainer" type="HBoxContainer" parent="BG/Scroll"]
 layout_mode = 2
 alignment = 1
 
-[node name="Done" type="Button" parent="Scroll/MutationContainer"]
+[node name="Done" type="Button" parent="BG/Scroll/MutationContainer"]
 layout_mode = 2
-theme = SubResource("Theme_ohali")
 theme_override_styles/focus = SubResource("StyleBoxFlat_8cbut")
 text = "OK
 "
@@ -69,4 +73,4 @@ flat = true
 alignment = 0
 icon_alignment = 1
 
-[connection signal="pressed" from="Scroll/MutationContainer/Done" to="." method="_on_done_pressed"]
+[connection signal="pressed" from="BG/Scroll/MutationContainer/Done" to="." method="_on_done_pressed"]

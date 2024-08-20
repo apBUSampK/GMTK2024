@@ -36,13 +36,14 @@ func LoadGenesForActor(actor: BasicActor):
 		var mutInst: TextureButton = Mut.instantiate()
 		mutInst.SetGene(genes.ToStr(gene))
 		mutInst.SetTextShort()
+		mutInst.z_index = gene
 		MutCont.add_child(mutInst)
 	MutCont.get_child(0).grab_focus()
 	
 	newMutations = []
 	var needGenes = lvl * 2 - len(actor.Genes)
 	for idx in needGenes:
-		NewMutation(actor.GenesLvl)
+		NewMutation(actor.GenesLvl, needGenes - idx + 1)
 
 func getRandomNewGene(from: Array, lvl: int) -> int:
 	if from.is_empty():
@@ -51,7 +52,7 @@ func getRandomNewGene(from: Array, lvl: int) -> int:
 	from.erase(choice)
 	return choice
 
-func NewMutation(lvl: int):
+func NewMutation(lvl: int, z_idx: int):
 	var possible: TabContainer = PossibleMut.instantiate()
 	var mutInst: TextureButton
 	var gene: genes.Genes
@@ -71,10 +72,10 @@ func NewMutation(lvl: int):
 	gene = getRandomNewGene(availGenes, lvl)
 	if gene >= 0:
 		mutInst.SetGene(genes.ToStr(gene))
-		mutInst.z_index = 1
 		possible.add_child(mutInst)
 	
 	newMutations.append(possible)
+	possible.z_index = z_idx
 	MutCont.add_child(possible)
 
 func mutation_change_param(mutation_name: String, actor_attributes: attributor.Attributor):
