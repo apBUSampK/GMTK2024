@@ -82,7 +82,7 @@ shape = SubResource("CircleShape2D_rm320")
 shape = SubResource("ConvexPolygonShape2D_dx440")
 
 [node name="RndStateUpdate" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 3.0
 autostart = true
 
 [node name="detectedStateUpdate" type="Timer" parent="."]

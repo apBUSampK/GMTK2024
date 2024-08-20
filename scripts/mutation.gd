@@ -96,6 +96,7 @@ func mutation_change_param(mutation_name: String, actor_attributes: attributor.A
 			#print(attribute_name, " = ", new_property.value, " + ", increase_strength)
 			new_property.value += increase_strength
 		
+		new_property.value = clamp(new_property.value, 0.01, 100000)
 		actor_attributes.set_property_by_attribute_name(attribute_name, new_property)
 
 func _on_done_pressed():
