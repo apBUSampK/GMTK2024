@@ -29,7 +29,7 @@ func destrMenuForActor(actor: BasicActor):
 
 func LoadGenesForActor(actor: BasicActor):
 	readyMenuForActor(actor)
-	var lvl = actor.GenesLvl
+	var lvl = get_parent().get_parent().lvl + 1
 	availGenes = genes.Genes.values().duplicate().slice((lvl * 4 - 4), (lvl * 4))
 	for gene in actor.Genes:
 		availGenes.erase(gene)
@@ -96,8 +96,8 @@ func mutation_change_param(mutation_name: String, actor_attributes: attributor.A
 			#print(attribute_name, " = ", new_property.value, " + ", increase_strength)
 			new_property.value += increase_strength
 		
+		new_property.value = clamp(new_property.value, 0.01, 100000)
 		actor_attributes.set_property_by_attribute_name(attribute_name, new_property)
-		
 
 func _on_done_pressed():
 	for newMut in newMutations:
