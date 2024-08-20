@@ -1,8 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://blreamgvokrnf"]
+[gd_scene load_steps=4 format=3 uid="uid://c1m1dsi1n3kh"]
 
 [ext_resource type="Texture2D" uid="uid://dneao2340vopj" path="res://DNA.png" id="1_8oqu6"]
 [ext_resource type="Script" path="res://scripts/test_mut.gd" id="2_cqedj"]
-[ext_resource type="StyleBox" uid="uid://dk112bgkao1gf" path="res://scenes/mutations/style.tres" id="3_tlqy2"]
+[ext_resource type="StyleBox" uid="uid://bo13bvfoj687c" path="res://scenes/mutations/style.tres" id="3_tlqy2"]
 
 [node name="Mutation" type="TextureButton"]
 texture_filter = 1
