@@ -1,4 +1,5 @@
 class_name PlayerActor extends BasicActor
+@onready var _animated_sprite = $AnimatedSprite2D
 
 signal offspring(pos: Vector2)
 
@@ -50,8 +51,10 @@ func _ready() -> void:
 	$detectedStateUpdate.timeout.connect(_on_detected_state_update_timeout)
 	$LifeTimer.timeout.connect(_on_life_timer_timeout)
 
-func _process(delta):
+func _process(delta):	
 	super(delta)
+	_animated_sprite.play("hero-form-1-movement") # TODO insert form change here.
+	
 	food -= BASE_HUNGER * attrs.hungerRate.value * delta
 	if food > attrs.maxFood.value:
 		food = attrs.maxFood.value

@@ -1,8 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://b8gs1agqdboak"]
+[gd_scene load_steps=14 format=3 uid="uid://b8gs1agqdboak"]
 
 [ext_resource type="Script" path="res://scenes/actors/PlayerActor.gd" id="1_50gu6"]
 [ext_resource type="Script" path="res://scripts/idle_wander.gd" id="3_0ms1c"]
-[ext_resource type="PackedScene" uid="uid://b8h5iakd2712o" path="res://scenes/player_sprite.tscn" id="3_pxy8d"]
+[ext_resource type="Texture2D" uid="uid://c70j2b2aumxd2" path="res://amoeba.png" id="3_ilydv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ohi0u"]
 size = Vector2(128, 128)
@@ -12,6 +12,56 @@ radius = 100.0
 
 [sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_dx440"]
 points = PackedVector2Array(0, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ilp2d"]
+atlas = ExtResource("3_ilydv")
+region = Rect2(0, 0, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d3wu6"]
+atlas = ExtResource("3_ilydv")
+region = Rect2(1024, 0, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v6g5d"]
+atlas = ExtResource("3_ilydv")
+region = Rect2(2048, 0, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hxnh4"]
+atlas = ExtResource("3_ilydv")
+region = Rect2(0, 1024, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d7o8a"]
+atlas = ExtResource("3_ilydv")
+region = Rect2(1024, 1024, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dgg3o"]
+atlas = ExtResource("3_ilydv")
+region = Rect2(2048, 1024, 1024, 1024)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h6ejm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ilp2d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d3wu6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v6g5d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hxnh4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d7o8a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dgg3o")
+}],
+"loop": true,
+"name": &"hero-form-1-movement",
+"speed": 5.0
+}]
 
 [node name="PlayerActor" type="CharacterBody2D"]
 process_mode = 1
@@ -57,4 +107,8 @@ one_shot = true
 [node name="AttackTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="PlayerSprite" parent="." instance=ExtResource("3_pxy8d")]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+rotation = 0.872665
+scale = Vector2(0.15, 0.15)
+sprite_frames = SubResource("SpriteFrames_h6ejm")
+animation = &"hero-form-1-movement"

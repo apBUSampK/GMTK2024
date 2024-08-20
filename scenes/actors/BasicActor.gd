@@ -155,7 +155,7 @@ func _ready():
 
 func _process(delta):
 	smInst.process()
-	var temp = get_parent().temp # Kelvins
+	var temp = get_parent().get_parent().temp # Kelvins
 	if hp <= 0 or temp > attrs.maxTemp.value or temp < attrs.minTemp.value:
 		smInst.SetState(sm.States.DYING)
 

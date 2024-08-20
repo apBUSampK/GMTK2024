@@ -97,7 +97,7 @@ end_cap_mode = 2
 
 [node name="CrisisTimer" type="Timer" parent="."]
 process_mode = 1
-wait_time = 10.0
+wait_time = 250.0
 one_shot = true
 autostart = true
 
