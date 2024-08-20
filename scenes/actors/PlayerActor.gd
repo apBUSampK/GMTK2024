@@ -25,6 +25,7 @@ func setupStateMachine():
 		"SCOUTING": scout,
 		"GRABBING": grab,
 		"DYING": dummy,
+		"MERGING": dummy
 	}
 	var set_funcs = {
 		"IDLE": oneshot_idle,
@@ -34,6 +35,7 @@ func setupStateMachine():
 		"SCOUTING": set_max_speed,
 		"GRABBING": set_max_speed,
 		"DYING": oneshot_die,
+		"MERGING": oneshot_merge
 	}
 	smInst.SetFunctions(state_funcs, set_funcs)
 
@@ -136,10 +138,6 @@ func grab():
 			return
 	return
 
-func _on_reproduction_timer_timeout() -> void:
-	smInst.SetState(sm.States.IDLE)
-	emit_signal("offspring", position, Genes)
-
 # If we have enough food, start childbirth. When the timer expires, we will
 # spawn a child
 func oneshot_reproduce():
@@ -148,7 +146,14 @@ func oneshot_reproduce():
 	desiredPosition = position
 	food -= attrs.birthFood.value
 	$ReproductionTimer.start()
-	
+
+func oneshot_merge() -> void:
+	set_max_speed()
+	desiredPosition = Vector2.ZERO
+
+func _on_reproduction_timer_timeout() -> void:
+	smInst.SetState(sm.States.IDLE)
+	emit_signal("offspring", position, Genes)
 
 func update_state_rnd():
 	match smInst.state:
@@ -173,19 +178,21 @@ func _on_detection_body_entered(body) -> void:
 		$detectedStateUpdate.start()
 
 func _on_detected_state_update_timeout() -> void:
-	var detectedBodies = $Detection.get_overlapping_bodies()
-	var seeSomething: bool = false
-	for body in detectedBodies:
-		if body != self:
-			seeSomething = true
-			if body is HostileActor:
-				react_to_enemy()
-				break
-			if body is Food:
-				react_to_food(body)
-				break
-	if seeSomething:
-		$detectedStateUpdate.start()
+	if smInst.state != sm.States.REPRODUCING and smInst.state != sm.States.DYING and \
+	smInst.state != sm.States.MERGING:
+		var detectedBodies = $Detection.get_overlapping_bodies()
+		var seeSomething: bool = false
+		for body in detectedBodies:
+			if body != self:
+				seeSomething = true
+				if body is HostileActor:
+					react_to_enemy()
+					break
+				if body is Food:
+					react_to_food(body)
+					break
+		if seeSomething:
+			$detectedStateUpdate.start()
 
 
 func _on_life_timer_timeout() -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://jgi3xmy3tqdn"]
+[gd_scene load_steps=11 format=4 uid="uid://jgi3xmy3tqdn"]
 
 [ext_resource type="Script" path="res://scripts/sample_scene.gd" id="1_mvqm1"]
 [ext_resource type="FontFile" uid="uid://dbi25c35h2dgb" path="res://novem___.ttf" id="2_k2jr5"]
@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://scripts/camera_2d.gd" id="3_6uau2"]
 [ext_resource type="Texture2D" uid="uid://c5ok6v4jymmgv" path="res://marker.png" id="3_b47mn"]
 [ext_resource type="AudioStream" uid="uid://btsktbrqhxdlq" path="res://1_Desire_to_Survive.mp3" id="6_dam2a"]
-[ext_resource type="TileSet" uid="uid://b38dujjp4n443" path="res://scenes/tilemap.tres" id="7_c5puf"]
+[ext_resource type="TileSet" uid="uid://behicadsdya3p" path="res://scenes/tilemap.tres" id="7_c5puf"]
 
 [sub_resource type="Theme" id="Theme_i2v6r"]
 default_font = ExtResource("2_k2jr5")
@@ -31,7 +31,7 @@ z_index = -1
 scale = Vector2(0.5, 0.5)
 tile_map_data = PackedByteArray("AAD6//v/AgAEAAAAAAD7//v/AgACAAAAAAD8//v/AgACAAAAAAD9//v/AgACAAAAAAD+//v/AgACAAAAAAD///v/AgACAAAAAAAAAPv/AgACAAAAAAABAPv/AgACAAAAAAACAPv/AgACAAAAAAADAPv/AgACAAAAAAAEAPv/AgACAAAAAAAFAPv/AgACAAAAAAAGAPv/AgACAAAAAAAHAPv/AgACAAAAAAAIAPv/AgAFAAAAAAAIAAQAAgADAAEAAAD6/wQAAgACAAEAAAD7/wQAAgAFAAEAAAD8/wQAAgAFAAEAAAD9/wQAAgAFAAEAAAD+/wQAAgAFAAEAAAD//wQAAgAFAAEAAAAAAAQAAgAFAAEAAAABAAQAAgAFAAEAAAACAAQAAgAFAAEAAAADAAQAAgAFAAEAAAAEAAQAAgAFAAEAAAAFAAQAAgAFAAEAAAAGAAQAAgAFAAEAAAAHAAQAAgAFAAEAAAAIAPz/AgAFAAAAAAAIAP3/AgAFAAAAAAAIAP7/AgAFAAAAAAAIAP//AgAFAAAAAAAIAAAAAgAFAAAAAAAIAAEAAgAFAAAAAAAIAAIAAgAFAAAAAAAIAAMAAgAFAAAAAAD6//z/AgAEAAEAAAD6//3/AgAEAAEAAAD6//7/AgAEAAEAAAD6////AgAEAAEAAAD6/wAAAgAEAAEAAAD6/wEAAgAEAAEAAAD6/wIAAgAEAAEAAAD6/wMAAgAEAAEAAAA=")
 tile_set = ExtResource("7_c5puf")
- 
+
 [node name="PlayerManager" type="Node2D" parent="."]
 script = ExtResource("2_qwvvs")
 

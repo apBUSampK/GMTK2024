@@ -46,6 +46,7 @@ func setupStateMachine():
 		"SCOUTING": scout,
 		"GRABBING": grab,
 		"DYING": dummy,
+		"MERGING": dummy
 	}
 	var set_funcs = {
 		"IDLE": oneshot_idle,
@@ -55,6 +56,7 @@ func setupStateMachine():
 		"SCOUTING": set_max_speed,
 		"GRABBING": set_max_speed,
 		"DYING": oneshot_die,
+		"MERGING": dummy
 	}
 	smInst.SetFunctions(state_funcs, set_funcs)
 

@@ -8,6 +8,7 @@ enum States {
 	SCOUTING,
 	GRABBING,
 	DYING,
+	MERGING
 }
 
 class StateMachine:

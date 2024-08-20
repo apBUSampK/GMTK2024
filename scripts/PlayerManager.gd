@@ -33,6 +33,10 @@ func spawn_player(pos: Vector2, genes: Array) -> void:
 	# connect signals
 	playerActor.offspring.connect(spawn_player)
 	playerActor.died.connect(despawn_player)
+	
+	# check for 4 players
+	if len(agents) >= 4:
+		pass
 
 func despawn_player(object: BasicActor):
 	agents.erase(object)
