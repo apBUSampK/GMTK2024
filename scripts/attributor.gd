@@ -59,7 +59,7 @@ class Attributor:
 	var maxFood = Attribute.new("maximum_food", 10.0, 1.0, 1.0)
 	
 	# amount of food that is needed for childbirth
-	var birthFood = Attribute.new("birth_food", 8.0, 1.0, 1.0)
+	var birthFood = Attribute.new("birth_food", 6.0, 1.0, 1.0)
 	
 	# food digestion pace
 	var hungerRate = Attribute.new("hunger_rate", 1.0, 0.0, 0.0)

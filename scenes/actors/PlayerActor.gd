@@ -53,7 +53,8 @@ func _ready() -> void:
 
 func _process(delta):	
 	super(delta)
-	_animated_sprite.play("hero-form-2-movement")
+	var anim = int(get_parent().get_parent().lvl / 2) + 1
+	_animated_sprite.play("hero-form-" + str(anim) + "-movement")
 	
 	food -= BASE_HUNGER * attrs.hungerRate.value * delta
 	if food > attrs.maxFood.value:
