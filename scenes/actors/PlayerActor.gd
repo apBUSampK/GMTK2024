@@ -1,6 +1,6 @@
 class_name PlayerActor extends BasicActor
 
-signal offspring(pos: Vector2)
+signal offspring(pos: Vector2, genes: Array)
 
 const BASE_HUNGER = .025
 const REPRODUCTION_FOOD_LEFTOVER = .5
@@ -130,9 +130,8 @@ func grab():
 	return
 
 func _on_reproduction_timer_timeout() -> void:
-	food -= attrs.birthFood.value
 	smInst.SetState(sm.States.IDLE)
-	emit_signal("offspring", position)
+	emit_signal("offspring", position, Genes)
 
 # If we have enough food, start childbirth. When the timer expires, we will
 # spawn a child

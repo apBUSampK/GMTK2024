@@ -1,5 +1,8 @@
 class_name BasicActor extends CharacterBody2D
 
+
+signal died(object: BasicActor)
+
 const EPS = 1e-2
 
 const IDLE_SPEED = .3
@@ -188,6 +191,10 @@ func _on_idle_wander_timeout() -> void:
 	$IdleWander.Init()
 	return
 
+func _on_death_timer_timeout() -> void:
+	emit_signal("died", self)
+	queue_free()
+
 func react_to_food(body: Food) -> void:
 	if smInst.state == sm.States.IDLE:
 		smInst.SetState(sm.States.GRABBING)
@@ -215,7 +222,3 @@ func _on_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
 			mutScreen.LoadGenesForActor(self)
-
-
-func _on_death_timer_timeout():
-	queue_free()
