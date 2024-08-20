@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://jgi3xmy3tqdn"]
+[gd_scene load_steps=10 format=3 uid="uid://jgi3xmy3tqdn"]
 
 [ext_resource type="Script" path="res://scripts/sample_scene.gd" id="1_mvqm1"]
 [ext_resource type="FontFile" uid="uid://dbi25c35h2dgb" path="res://novem___.ttf" id="2_k2jr5"]
 [ext_resource type="PackedScene" uid="uid://dho7yfjj2twma" path="res://scenes/helper/PlayerManager.tscn" id="2_pnuv1"]
 [ext_resource type="PackedScene" uid="uid://isy45wwbgf0e" path="res://scenes/mutations/mutation.tscn" id="2_vmace"]
+[ext_resource type="Script" path="res://scripts/camera_2d.gd" id="3_6uau2"]
 [ext_resource type="PackedScene" uid="uid://ctqka31wjgyc" path="res://scenes/actors/HostileActor.tscn" id="4_w8if1"]
 [ext_resource type="AudioStream" uid="uid://btsktbrqhxdlq" path="res://1_Desire_to_Survive.mp3" id="6_dam2a"]
 
@@ -22,6 +23,7 @@ script = ExtResource("1_mvqm1")
 mutScreen = NodePath("../Canvas/MutScreen")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("3_6uau2")
 
 [node name="GetReady" type="Label" parent="Camera2D"]
 z_index = 1

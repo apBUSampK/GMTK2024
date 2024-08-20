@@ -37,16 +37,8 @@ func _ready():
 	$PlayerManager.spawn_player(Vector2.ZERO)
 	return
 
-func _input(event):
+func _unhandled_input(event):
 	if not get_tree().paused:
-		if event.is_action("ui_up"):
-			$Camera2D.position.y -= CAMERA_SPEED
-		if event.is_action("ui_down"):
-			$Camera2D.position.y += CAMERA_SPEED
-		if event.is_action("ui_left"):
-			$Camera2D.position.x -= CAMERA_SPEED
-		if event.is_action("ui_right"):
-			$Camera2D.position.x += CAMERA_SPEED
 		if event.is_action_pressed("ui_cancel"):
 			$Canvas/PauseScreen.show()
 			get_tree().paused = true
