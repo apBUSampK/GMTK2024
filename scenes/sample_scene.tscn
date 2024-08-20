@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/sample_scene.gd" id="1_mvqm1"]
 [ext_resource type="FontFile" uid="uid://dbi25c35h2dgb" path="res://novem___.ttf" id="2_k2jr5"]
 [ext_resource type="PackedScene" uid="uid://isy45wwbgf0e" path="res://scenes/mutations/mutation.tscn" id="2_vmace"]
-[ext_resource type="PackedScene" uid="uid://b8gs1agqdboak" path="res://scenes/actors/PlayerActor.tscn" id="3_lavn3"]
+[ext_resource type="PackedScene" uid="uid://b041t0y8hfb20" path="res://scenes/actors/PlayerActor.tscn" id="3_lavn3"]
 [ext_resource type="PackedScene" uid="uid://ctqka31wjgyc" path="res://scenes/actors/HostileActor.tscn" id="4_w8if1"]
 [ext_resource type="AudioStream" uid="uid://btsktbrqhxdlq" path="res://1_Desire_to_Survive.mp3" id="6_dam2a"]
 
