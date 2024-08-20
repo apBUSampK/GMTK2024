@@ -53,7 +53,7 @@ func _ready() -> void:
 
 func _process(delta):	
 	super(delta)
-	_animated_sprite.play("hero-form-1-movement") # TODO insert form change here.
+	_animated_sprite.play("hero-form-2-movement")
 	
 	food -= BASE_HUNGER * attrs.hungerRate.value * delta
 	if food > attrs.maxFood.value:

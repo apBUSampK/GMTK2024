@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://b8gs1agqdboak"]
+[gd_scene load_steps=19 format=3 uid="uid://b8gs1agqdboak"]
 
 [ext_resource type="Script" path="res://scenes/actors/PlayerActor.gd" id="1_50gu6"]
 [ext_resource type="Script" path="res://scripts/idle_wander.gd" id="3_0ms1c"]
 [ext_resource type="Texture2D" uid="uid://c70j2b2aumxd2" path="res://amoeba.png" id="3_ilydv"]
+[ext_resource type="Texture2D" uid="uid://boy0krk4p3o0h" path="res://amoeba2.png" id="4_76bon"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ohi0u"]
 size = Vector2(128, 128)
@@ -13,53 +14,86 @@ radius = 100.0
 [sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_dx440"]
 points = PackedVector2Array(0, 0)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ilp2d"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_34cb3"]
 atlas = ExtResource("3_ilydv")
-region = Rect2(0, 0, 1024, 1024)
+region = Rect2(0, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_d3wu6"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_2oox2"]
 atlas = ExtResource("3_ilydv")
-region = Rect2(1024, 0, 1024, 1024)
+region = Rect2(128, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_v6g5d"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_0pn24"]
 atlas = ExtResource("3_ilydv")
-region = Rect2(2048, 0, 1024, 1024)
+region = Rect2(256, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hxnh4"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_vm288"]
 atlas = ExtResource("3_ilydv")
-region = Rect2(0, 1024, 1024, 1024)
+region = Rect2(0, 128, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_d7o8a"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_fr0ux"]
 atlas = ExtResource("3_ilydv")
-region = Rect2(1024, 1024, 1024, 1024)
+region = Rect2(128, 128, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dgg3o"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_pir6p"]
 atlas = ExtResource("3_ilydv")
-region = Rect2(2048, 1024, 1024, 1024)
+region = Rect2(256, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_00n85"]
+atlas = ExtResource("4_76bon")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8wmm1"]
+atlas = ExtResource("4_76bon")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kuvjr"]
+atlas = ExtResource("4_76bon")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2sp78"]
+atlas = ExtResource("4_76bon")
+region = Rect2(384, 0, 128, 128)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_h6ejm"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ilp2d")
+"texture": SubResource("AtlasTexture_34cb3")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_d3wu6")
+"texture": SubResource("AtlasTexture_2oox2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_v6g5d")
+"texture": SubResource("AtlasTexture_0pn24")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hxnh4")
+"texture": SubResource("AtlasTexture_vm288")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_d7o8a")
+"texture": SubResource("AtlasTexture_fr0ux")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_dgg3o")
+"texture": SubResource("AtlasTexture_pir6p")
 }],
 "loop": true,
 "name": &"hero-form-1-movement",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.5,
+"texture": SubResource("AtlasTexture_00n85")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8wmm1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kuvjr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2sp78")
+}],
+"loop": true,
+"name": &"hero-form-2-movement",
 "speed": 5.0
 }]
 
@@ -108,7 +142,7 @@ one_shot = true
 one_shot = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-10, -1)
 rotation = 0.872665
-scale = Vector2(0.15, 0.15)
 sprite_frames = SubResource("SpriteFrames_h6ejm")
-animation = &"hero-form-1-movement"
+animation = &"hero-form-2-movement"
