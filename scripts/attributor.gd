@@ -20,7 +20,7 @@ class Attributor:
 	var maxHp = Attribute.new("HP", 400.0)
 	
 	# damage
-	var damage = Attribute.new("damage", 20.0)
+	var damage = Attribute.new("damage", 200.0)
 	
 	# attack speed
 	var attackSpeed = Attribute.new("attack_speed", 1.0)

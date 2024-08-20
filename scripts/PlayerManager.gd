@@ -32,10 +32,10 @@ func _process(delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_action_pressed("RMB"):
 		if (marker.position - event.position).length() > DELETE_MARKER_OFFSET or marker.visible == false:
-			marker.position = event.position
+			marker.position = get_global_mouse_position()
 			for agent in PlayerAgents:
 				agent.scoutingSet = true
-				agent.scoutingPosition = event.position
+				agent.scoutingPosition = marker.position
 		else:
 			marker.visible == false
 			for agent in PlayerAgents:
