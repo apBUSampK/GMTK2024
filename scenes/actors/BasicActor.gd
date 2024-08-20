@@ -13,7 +13,7 @@ const child = preload("res://scenes/actors/BasicActor.tscn")
 const genes = preload("res://scripts/genes.gd")
 const foodType = preload("res://scripts/food.gd")
 
-@onready var mutScreen: Control = $"../Canvas/MutScreen"
+@export var mutScreen: Control
 
 var attrs: attributor.Attributor
 var smInst: sm.StateMachine

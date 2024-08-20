@@ -5,7 +5,7 @@ const DELETE_MARKER_OFFSET = 100.
 
 const PlayerActor = preload("res://scenes/actors/PlayerActor.tscn")
 
-@export var mutScreen: CanvasLayer
+@export var mutScreen: Control
 
 @onready var marker = $Marker
 var PlayerAgents: Array[PlayerActor] = []
