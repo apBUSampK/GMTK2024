@@ -2,9 +2,10 @@
 
 [ext_resource type="Script" path="res://scripts/sample_scene.gd" id="1_mvqm1"]
 [ext_resource type="FontFile" uid="uid://dbi25c35h2dgb" path="res://novem___.ttf" id="2_k2jr5"]
-[ext_resource type="PackedScene" uid="uid://dho7yfjj2twma" path="res://scenes/helper/PlayerManager.tscn" id="2_pnuv1"]
+[ext_resource type="Script" path="res://scripts/PlayerManager.gd" id="2_qwvvs"]
 [ext_resource type="PackedScene" uid="uid://isy45wwbgf0e" path="res://scenes/mutations/mutation.tscn" id="2_vmace"]
 [ext_resource type="Script" path="res://scripts/camera_2d.gd" id="3_6uau2"]
+[ext_resource type="Texture2D" uid="uid://c5ok6v4jymmgv" path="res://marker.png" id="3_b47mn"]
 [ext_resource type="AudioStream" uid="uid://btsktbrqhxdlq" path="res://1_Desire_to_Survive.mp3" id="6_dam2a"]
 [ext_resource type="TileSet" uid="uid://b38dujjp4n443" path="res://scenes/tilemap.tres" id="7_c5puf"]
 
@@ -30,9 +31,13 @@ z_index = -1
 scale = Vector2(0.5, 0.5)
 tile_map_data = PackedByteArray("AAD6//v/AgAEAAAAAAD7//v/AgACAAAAAAD8//v/AgACAAAAAAD9//v/AgACAAAAAAD+//v/AgACAAAAAAD///v/AgACAAAAAAAAAPv/AgACAAAAAAABAPv/AgACAAAAAAACAPv/AgACAAAAAAADAPv/AgACAAAAAAAEAPv/AgACAAAAAAAFAPv/AgACAAAAAAAGAPv/AgACAAAAAAAHAPv/AgACAAAAAAAIAPv/AgAFAAAAAAAIAAQAAgADAAEAAAD6/wQAAgACAAEAAAD7/wQAAgAFAAEAAAD8/wQAAgAFAAEAAAD9/wQAAgAFAAEAAAD+/wQAAgAFAAEAAAD//wQAAgAFAAEAAAAAAAQAAgAFAAEAAAABAAQAAgAFAAEAAAACAAQAAgAFAAEAAAADAAQAAgAFAAEAAAAEAAQAAgAFAAEAAAAFAAQAAgAFAAEAAAAGAAQAAgAFAAEAAAAHAAQAAgAFAAEAAAAIAPz/AgAFAAAAAAAIAP3/AgAFAAAAAAAIAP7/AgAFAAAAAAAIAP//AgAFAAAAAAAIAAAAAgAFAAAAAAAIAAEAAgAFAAAAAAAIAAIAAgAFAAAAAAAIAAMAAgAFAAAAAAD6//z/AgAEAAEAAAD6//3/AgAEAAEAAAD6//7/AgAEAAEAAAD6////AgAEAAEAAAD6/wAAAgAEAAEAAAD6/wEAAgAEAAEAAAD6/wIAAgAEAAEAAAD6/wMAAgAEAAEAAAA=")
 tile_set = ExtResource("7_c5puf")
+ 
+[node name="PlayerManager" type="Node2D" parent="."]
+script = ExtResource("2_qwvvs")
 
-[node name="PlayerManager" parent="." node_paths=PackedStringArray("mutScreen") instance=ExtResource("2_pnuv1")]
-mutScreen = NodePath("../Canvas/MutScreen")
+[node name="Marker" type="Sprite2D" parent="PlayerManager"]
+visible = false
+texture = ExtResource("3_b47mn")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 script = ExtResource("3_6uau2")

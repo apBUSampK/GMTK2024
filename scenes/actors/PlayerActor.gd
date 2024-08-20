@@ -1,7 +1,7 @@
 class_name PlayerActor extends BasicActor
 @onready var _animated_sprite = $AnimatedSprite2D
 
-signal offspring(pos: Vector2)
+signal offspring(pos: Vector2, genes: Array)
 
 const BASE_HUNGER = .025
 const REPRODUCTION_FOOD_LEFTOVER = .5
@@ -61,12 +61,15 @@ func _process(delta):
 	if food <= 0:
 		smInst.SetState(sm.States.DYING)
 
-func idle() -> void:
+func consume_food():
 	# passive food consumption
 	for index in get_slide_collision_count():
 		var collisionObj := get_slide_collision(index).get_collider()
 		if collisionObj and collisionObj is Food:
 			food += collisionObj.Consume()
+
+func idle() -> void:
+	consume_food()
 
 func flee() -> void:
 	super()
@@ -104,7 +107,8 @@ func attack() -> void:
 			smInst.SetState(buffState)
 
 func scout():
-	if scoutingSet:
+	consume_food()
+	if not scoutingSet:
 		smInst.SetState(sm.States.IDLE)
 		return
 	var deltaScouting = scoutingPosition - position
@@ -113,7 +117,7 @@ func scout():
 		return
 	if (desiredPosition - position).length() < EPS * attrs.movementSpeed.value:
 		desiredPosition = position + deltaScouting.normalized().rotated(
-			randf_range(-SCOUTING_RANDOM_HEADING / 2, SCOUTING_RANDOM_HEADING /2)) * randfn(
+			randf_range(-SCOUTING_RANDOM_HEADING / 2, SCOUTING_RANDOM_HEADING /2)) * randf_range(
 				SCOUTING_STEP_MIN, SCOUTING_STEP_MAX
 			)
 
@@ -133,9 +137,8 @@ func grab():
 	return
 
 func _on_reproduction_timer_timeout() -> void:
-	food -= attrs.birthFood.value
 	smInst.SetState(sm.States.IDLE)
-	emit_signal("offspring", position)
+	emit_signal("offspring", position, Genes)
 
 # If we have enough food, start childbirth. When the timer expires, we will
 # spawn a child
@@ -150,9 +153,10 @@ func oneshot_reproduce():
 func update_state_rnd():
 	match smInst.state:
 		sm.States.IDLE:
-			if randf_range(0, 10) < attrs.curiosity.value:
+			if randf_range(0, 1) < attrs.curiosity.value:
 				smInst.SetState(sm.States.SCOUTING)
-			if randf_range(0, 10) < attrs.fertility.value and food > attrs.birthFood.value + REPRODUCTION_FOOD_LEFTOVER:
+				return
+			if randf_range(0, 1) < attrs.fertility.value and food > attrs.birthFood.value + REPRODUCTION_FOOD_LEFTOVER:
 				smInst.SetState(sm.States.REPRODUCING)
 		_:
 			return

@@ -46,7 +46,7 @@ func food_spawn():
 func _ready():
 	setCrisis()
 	food_spawn()
-	$PlayerManager.spawn_player(Vector2.ZERO)
+	$PlayerManager.spawn_player(Vector2.ZERO, [])
 	return
 
 func _unhandled_input(event):

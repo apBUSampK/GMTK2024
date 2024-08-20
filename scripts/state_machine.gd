@@ -24,6 +24,7 @@ class StateMachine:
 	func SetState(st: States):
 		#print("Changing from ", States.keys()[state], " to ", States.keys()[st])
 		state = st
+		oneshot_funcs[state].call()
 	
 	func SetFunctions(funcs: Dictionary, ofuncs: Dictionary):
 		for state_val in States:
